@@ -24,7 +24,7 @@ function initTypingEffect() {
   badge.style.minWidth = '280px';
 
   let charIndex = 0;
-  const typingSpeed = 80;
+  const typingSpeed = 40; // Faster typing (was 80ms)
 
   function typeChar() {
     if (charIndex < originalText.length) {
@@ -188,32 +188,68 @@ function initSmoothScroll() {
 }
 
 /**
- * Scroll reveal animation
+ * Scroll reveal animation - Enhanced version
  */
 function initScrollReveal() {
-  const elements = document.querySelectorAll(
-    ".principle-card, .solution-card, .visual-card",
-  );
+  // Add scroll-reveal class to elements that should animate
+  const animationConfig = [
+    // Stats section
+    { selector: '.stat-card', animation: 'fade-up', stagger: 100 },
+    // About section
+    { selector: '.about-intro', animation: 'fade-right', stagger: 0 },
+    { selector: '.about-mission', animation: 'fade-up', stagger: 0 },
+    { selector: '.feature-item', animation: 'fade-left', stagger: 80 },
+    { selector: '.visual-card', animation: 'fade-left', stagger: 150 },
+    // Philosophy section
+    { selector: '.principle-card', animation: 'fade-up', stagger: 100 },
+    // Solutions section
+    { selector: '.solution-filter', animation: 'fade-up', stagger: 0 },
+    { selector: '.solution-card', animation: 'zoom-in', stagger: 50 },
+    // Quote section
+    { selector: '.quote-content', animation: 'fade-up', stagger: 0 },
+    // CTA section
+    { selector: '.cta-content h2', animation: 'fade-up', stagger: 0 },
+    { selector: '.cta-content > p', animation: 'fade-up', stagger: 0 },
+    { selector: '.cta-value', animation: 'fade-up', stagger: 150 },
+    // Section headers
+    { selector: '.section-tag', animation: 'fade-down', stagger: 0 },
+    { selector: '.section-title', animation: 'fade-up', stagger: 0 },
+    { selector: '.section-subtitle', animation: 'fade-up', stagger: 0 },
+  ];
 
+  // Apply initial hidden state and set up observer
+  animationConfig.forEach(config => {
+    const elements = document.querySelectorAll(config.selector);
+    elements.forEach((el, index) => {
+      el.classList.add('scroll-reveal', config.animation);
+      el.style.transitionDelay = `${index * config.stagger}ms`;
+    });
+  });
+
+  // Create intersection observer
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
+          entry.target.classList.add('revealed');
+          // Optional: unobserve after animation for performance
+          // observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.1 },
+    {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
   );
 
-  elements.forEach((el) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = "all 0.6s ease";
+  // Observe all scroll-reveal elements
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
     observer.observe(el);
   });
 }
 
 // Initialize scroll reveal after DOM is fully loaded
-window.addEventListener("load", initScrollReveal);
+window.addEventListener("load", () => {
+  initScrollReveal();
+});
