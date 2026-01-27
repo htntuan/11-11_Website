@@ -257,6 +257,15 @@ img {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
+/* Nav button when navbar is scrolled */
+.navbar.scrolled .nav-btn .material-symbols-outlined {
+  color: var(--text-primary);
+}
+
+.navbar.scrolled .nav-btn:hover .material-symbols-outlined {
+  text-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
@@ -553,6 +562,133 @@ img {
     transform: translateX(-50%) translateY(10px);
     opacity: 0.5;
   }
+}
+
+/* ============================================
+   VIDEO PRODUCT SECTION
+   ============================================ */
+.video-product {
+  padding: var(--section-padding);
+  background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-light-secondary) 100%);
+  position: relative;
+}
+
+.video-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: #000;
+  aspect-ratio: 16 / 9;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.video-placeholder.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.video-placeholder:hover .video-overlay {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-glow);
+}
+
+.play-button .material-icons {
+  font-size: 2.5rem;
+  color: white;
+  margin-left: 4px;
+}
+
+.video-placeholder:hover .play-button {
+  transform: scale(1.1);
+  box-shadow: 0 0 50px rgba(34, 197, 94, 0.6);
+}
+
+.video-features {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.video-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  transition: var(--transition-normal);
+}
+
+.video-feature:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-green);
+  border-color: var(--primary-green);
+}
+
+.video-feature .material-icons {
+  font-size: 1.5rem;
+  color: var(--primary-green);
+}
+
+.video-feature span:last-child {
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 /* ============================================
@@ -910,11 +1046,141 @@ img {
 .solution-card {
   background: var(--surface-dark);
   border-radius: var(--radius-lg);
-  padding: 30px;
+  padding: 25px;
   border: 2px solid rgba(255, 255, 255, 0.05);
   transition: var(--transition-normal);
   position: relative;
   overflow: hidden;
+  /* Background image mosaic - each card shows a portion */
+  --bg-image: url('resources/backgroundSolution.png');
+}
+
+/* Background layer for mosaic effect */
+.solution-card .solution-bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: auto;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--radius-lg);
+}
+
+/* Position for each card in 3x8 grid - fixed pixel positions */
+
+/* Row 1 */
+.solution-card:nth-child(1) .solution-bg-layer {
+  background-position: 0px 0px;
+}
+
+.solution-card:nth-child(2) .solution-bg-layer {
+  background-position: -350px 0px;
+}
+
+.solution-card:nth-child(3) .solution-bg-layer {
+  background-position: -700px 0px;
+}
+
+/* Row 2 */
+.solution-card:nth-child(4) .solution-bg-layer {
+  background-position: 0px -280px;
+}
+
+.solution-card:nth-child(5) .solution-bg-layer {
+  background-position: -350px -280px;
+}
+
+.solution-card:nth-child(6) .solution-bg-layer {
+  background-position: -700px -280px;
+}
+
+/* Row 3 */
+.solution-card:nth-child(7) .solution-bg-layer {
+  background-position: 0px -560px;
+}
+
+.solution-card:nth-child(8) .solution-bg-layer {
+  background-position: -350px -560px;
+}
+
+.solution-card:nth-child(9) .solution-bg-layer {
+  background-position: -700px -560px;
+}
+
+/* Row 4 */
+.solution-card:nth-child(10) .solution-bg-layer {
+  background-position: 0px -840px;
+}
+
+.solution-card:nth-child(11) .solution-bg-layer {
+  background-position: -350px -840px;
+}
+
+.solution-card:nth-child(12) .solution-bg-layer {
+  background-position: -700px -840px;
+}
+
+/* Row 5 */
+.solution-card:nth-child(13) .solution-bg-layer {
+  background-position: 0px -1120px;
+}
+
+.solution-card:nth-child(14) .solution-bg-layer {
+  background-position: -350px -1120px;
+}
+
+.solution-card:nth-child(15) .solution-bg-layer {
+  background-position: -700px -1120px;
+}
+
+/* Row 6 */
+.solution-card:nth-child(16) .solution-bg-layer {
+  background-position: 0px -1400px;
+}
+
+.solution-card:nth-child(17) .solution-bg-layer {
+  background-position: -350px -1400px;
+}
+
+.solution-card:nth-child(18) .solution-bg-layer {
+  background-position: -700px -1400px;
+}
+
+/* Row 7 */
+.solution-card:nth-child(19) .solution-bg-layer {
+  background-position: 0px -1680px;
+}
+
+.solution-card:nth-child(20) .solution-bg-layer {
+  background-position: -350px -1680px;
+}
+
+.solution-card:nth-child(21) .solution-bg-layer {
+  background-position: -700px -1680px;
+}
+
+/* Row 8 */
+.solution-card:nth-child(22) .solution-bg-layer {
+  background-position: 0px -1960px;
+}
+
+.solution-card:nth-child(23) .solution-bg-layer {
+  background-position: -350px -1960px;
+}
+
+.solution-card:nth-child(24) .solution-bg-layer {
+  background-position: -700px -1960px;
+}
+
+/* Ensure content is above the background layer */
+.solution-card>*:not(.solution-bg-layer) {
+  position: relative;
+  z-index: 1;
 }
 
 .solution-card::before {
@@ -980,28 +1246,36 @@ img {
 .solution-number {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--primary-green);
-  background: rgba(16, 185, 129, 0.15);
+  color: white;
+  background: rgba(34, 197, 94, 0.8);
   padding: 4px 10px;
   border-radius: 20px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .solution-icon {
   font-size: 1.8rem;
 }
 
+.solution-icon .material-icons {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .solution-card h3 {
-  color: var(--text-primary);
+  color: white;
   font-size: 1.1rem;
   margin-bottom: 12px;
   line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .solution-problem {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   margin-bottom: 20px;
   line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .solution-codes {
@@ -1014,28 +1288,33 @@ img {
 .code-tag {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--secondary-teal);
-  background: rgba(20, 184, 166, 0.1);
+  color: white;
+  background: rgba(20, 184, 166, 0.8);
   padding: 4px 12px;
   border-radius: 15px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .expand-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: none;
+  background: rgba(34, 197, 94, 0.85);
   border: none;
-  color: var(--primary-green);
+  color: white;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 10px 0;
+  padding: 10px 16px;
+  border-radius: 20px;
   transition: var(--transition-normal);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .expand-btn:hover {
-  color: var(--primary-green-light);
+  background: rgba(34, 197, 94, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
 }
 
 .expand-btn svg {
@@ -1048,9 +1327,12 @@ img {
 
 .solution-details {
   display: none;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 10px;
+  padding: 20px;
+  margin-top: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .solution-details.show {

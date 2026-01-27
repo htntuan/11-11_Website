@@ -10,7 +10,51 @@ document.addEventListener("DOMContentLoaded", function () {
   initSolutionFilters();
   initSmoothScroll();
   initTypingEffect();
+  initSolutionBackgrounds(); // Add mosaic backgrounds to solution cards
+  initVideoPlayer(); // Initialize video player
 });
+
+/**
+ * Add background layer to each solution card for mosaic effect
+ */
+function initSolutionBackgrounds() {
+  const solutionCards = document.querySelectorAll('.solution-card');
+
+  solutionCards.forEach((card) => {
+    // Create background layer element
+    const bgLayer = document.createElement('div');
+    bgLayer.className = 'solution-bg-layer';
+    // Insert as first child so it's behind other content
+    card.insertBefore(bgLayer, card.firstChild);
+  });
+}
+
+/**
+ * Video player functionality
+ */
+function initVideoPlayer() {
+  const placeholder = document.getElementById('videoPlaceholder');
+  const video = document.getElementById('productVideo');
+
+  if (placeholder && video) {
+    placeholder.addEventListener('click', () => {
+      placeholder.classList.add('hidden');
+      video.play();
+    });
+
+    // Show placeholder again when video ends
+    video.addEventListener('ended', () => {
+      placeholder.classList.remove('hidden');
+    });
+
+    // Show placeholder when video is paused and reset to beginning
+    video.addEventListener('pause', () => {
+      if (video.currentTime === 0) {
+        placeholder.classList.remove('hidden');
+      }
+    });
+  }
+}
 
 /**
  * Typing effect for hero badge
