@@ -12,7 +12,39 @@ document.addEventListener("DOMContentLoaded", function () {
   initTypingEffect();
   initSolutionBackgrounds(); // Add mosaic backgrounds to solution cards
   initVideoPlayer(); // Initialize video player
+  initStatIconAnimation(); // Initialize stat icon jump animation
 });
+
+/**
+ * Initialize stat icon jump animation on scroll
+ */
+function initStatIconAnimation() {
+  const icons = document.querySelectorAll(".stat-icon");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Add animation class
+          entry.target.classList.add("animate-jump");
+
+          // Remove class after animation finishes (0.8s as defined in CSS)
+          setTimeout(() => {
+            entry.target.classList.remove("animate-jump");
+          }, 1000);
+
+          // Stop observing after animation is triggered
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.5, // Trigger when 50% of icon is visible
+    }
+  );
+
+  icons.forEach((icon) => observer.observe(icon));
+}
 
 /**
  * Add background layer to each solution card for mosaic effect
