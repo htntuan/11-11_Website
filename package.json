@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.98.0"
+    "@supabase/supabase-js": "^2.98.0",
+    "phaser": "^4.1.0"
   }
 }

@@ -20,6 +20,10 @@
         --muted: #7b8294;
         --accent: #6dbd5f;
         --accent-soft: #e6f7dc;
+        --forest: #173721;
+        --soil: #8b6128;
+        --cream: #fffaf0;
+        --lime: #d2f26b;
       }
 
       * {
@@ -39,15 +43,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid var(--line);
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -108,7 +121,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -197,76 +214,409 @@
       }
 
       .workspace {
-        padding: 18px;
+        position: relative;
+        padding: clamp(18px, 3vw, 34px);
         display: grid;
-        gap: 14px;
-      }
-      #profile_panel {
-        background: #fff;
-        border: 1px solid #dce6da;
-        border-radius: 14px;
-        padding: 18px;
-        display: grid;
-        gap: 16px;
-        max-width: 720px;
+        align-content: start;
+        background:
+          radial-gradient(
+            circle at 12% 10%,
+            rgba(210, 242, 107, 0.34),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 88% 7%,
+            rgba(139, 97, 40, 0.18),
+            transparent 30%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(255, 250, 240, 0.95),
+            rgba(229, 241, 216, 0.9)
+          ),
+          url("resources/SolutionSectionBackground.png");
+        background-size: auto, auto, auto, cover;
+        background-position: center;
       }
 
-      .profile_avatar_section,
-      .profile_username_section,
+      .workspace::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 18% 12%,
+            rgba(195, 143, 79, 0.18),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 88% 10%,
+            rgba(49, 107, 70, 0.16),
+            transparent 30%
+          );
+        pointer-events: none;
+      }
+      #profile_panel {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, 100%);
+        display: grid;
+        grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.25fr);
+        gap: 24px;
+      }
+
+      .profile-identity,
+      .profile-section,
+      .reward-card,
+      .action-card {
+        background: rgba(255, 253, 247, 0.88);
+        border: 1px solid rgba(205, 191, 162, 0.78);
+        border-radius: 28px;
+        box-shadow: 0 24px 60px rgba(44, 66, 40, 0.12);
+        backdrop-filter: blur(16px);
+      }
+
+      .profile-identity {
+        position: sticky;
+        top: 84px;
+        align-self: start;
+        overflow: hidden;
+      }
+
+      .identity-cover {
+        min-height: 172px;
+        padding: 18px;
+        background:
+          radial-gradient(
+            circle at 72% 22%,
+            rgba(210, 242, 107, 0.55),
+            transparent 24%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(19, 55, 32, 0.96),
+            rgba(37, 82, 47, 0.72)
+          ),
+          url("resources/AboutBackground.png") center/cover;
+        color: #fff8df;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .profile-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border: 1px solid rgba(255, 248, 223, 0.35);
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(255, 255, 255, 0.1);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .profile-chip::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #d2f26b;
+      }
+
+      .identity-body {
+        padding: 0 24px 24px;
+      }
+
+      .avatar-frame {
+        width: 154px;
+        height: 154px;
+        margin-top: -72px;
+        padding: 7px;
+        border-radius: 38px;
+        background: #fffdf7;
+        border: 1px solid #ddd4c2;
+        box-shadow: 0 16px 34px rgba(29, 48, 32, 0.18);
+      }
+
+      #profile_avatar_preview {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        object-fit: cover;
+        background: #ebe7d9;
+      }
+
+      .profile-name-row {
+        margin-top: 18px;
+      }
+
+      .profile-name-row h2 {
+        margin: 0;
+        color: var(--forest);
+        font-size: clamp(2.1rem, 4.5vw, 3.55rem);
+        line-height: 0.9;
+        letter-spacing: -0.07em;
+      }
+
+      .profile-role {
+        margin: 10px 0 0;
+        color: #6c665b;
+        line-height: 1.55;
+      }
+
+      .profile-code {
+        flex: 0 0 auto;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: #efe4cf;
+        color: #694819;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .profile-stats-strip {
+        margin-top: 22px;
+      }
+
       .profile_stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .profile_stats p {
+        margin: 0;
+        min-height: 104px;
+        border: 1px solid rgba(226, 215, 195, 0.9);
+        border-radius: 22px;
+        padding: 16px;
+        background:
+          radial-gradient(
+            circle at 85% 18%,
+            rgba(210, 242, 107, 0.35),
+            transparent 30%
+          ),
+          #f7f0df;
+        color: #6c665b;
+        font-weight: 700;
+      }
+
+      .profile_stats span {
+        display: block;
+        margin-top: 8px;
+        color: #204d2f;
+        font-size: 2rem;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .profile-workbench {
+        display: grid;
+        gap: 18px;
+      }
+
+      .profile-kicker {
+        margin: 0 0 8px;
+        color: var(--soil);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .section-title-row {
+        margin-bottom: 18px;
+      }
+
+      .section-title-row h3,
+      .reward-card h3,
+      .action-card h3 {
+        margin: 0;
+        color: var(--forest);
+        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        letter-spacing: -0.035em;
+      }
+
+      .section-title-row p,
+      .stat-note {
+        margin: 6px 0 0;
+        color: #736d61;
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      .profile-section,
+      .reward-card,
+      .action-card {
+        padding: 22px;
+      }
+
+      .settings-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .setting-row {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 14px;
+        padding: 18px;
+        border: 1px solid #e2d7c3;
+        border-radius: 22px;
+        background: rgba(250, 246, 236, 0.86);
+      }
+
+      .setting-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #d2f26b, #dfe9d6);
+        color: #22532f;
+      }
+
+      .setting-content {
         display: grid;
         gap: 10px;
       }
 
-      #profile_avatar_preview {
-        width: 120px;
-        height: 120px;
-        border-radius: 16px;
-        object-fit: cover;
-        border: 1px solid #dce6da;
-        background: #f2f4ef;
+      .setting-content label {
+        font-weight: 800;
+        color: #273629;
       }
 
       #profile_username_input,
       #profile_avatar_input {
-        max-width: 360px;
-        border: 1px solid #d2ddcf;
-        border-radius: 10px;
-        padding: 10px 12px;
+        width: 100%;
+        border: 1px solid #d8cdb9;
+        border-radius: 14px;
+        padding: 12px 13px;
         font: inherit;
-        color: inherit;
-        background: #fff;
+        color: #273629;
+        background: #fffdf7;
+      }
+
+      #profile_avatar_input::file-selector-button {
+        margin-right: 12px;
+        border: 0;
+        border-radius: 10px;
+        padding: 9px 12px;
+        background: #24452d;
+        color: #fff8df;
+        font-weight: 800;
+        cursor: pointer;
       }
 
       #profile_avatar_upload,
       #profile_username_save,
       #profile_claim_coin {
         width: fit-content;
-        border: 1px solid #6dbd5f;
-        border-radius: 10px;
-        background: #6dbd5f;
-        color: #fff;
+        min-width: 168px;
+        border: 0;
+        border-radius: 999px;
+        background: #24452d;
+        color: #fff8df;
         font: inherit;
-        font-weight: 600;
-        padding: 9px 14px;
+        font-weight: 800;
+        padding: 12px 18px;
         cursor: pointer;
+        box-shadow: 0 10px 24px rgba(36, 69, 45, 0.16);
       }
 
       #profile_avatar_upload:hover,
       #profile_username_save:hover,
       #profile_claim_coin:hover {
-        filter: brightness(0.95);
+        background: #183422;
+        transform: translateY(-1px);
       }
 
-      .profile_stats p {
-        margin: 0;
+      .reward-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .reward-card {
+        background:
+          radial-gradient(
+            circle at 84% 18%,
+            rgba(210, 242, 107, 0.42),
+            transparent 28%
+          ),
+          linear-gradient(135deg, #173721, #263f2d);
+        color: #fff8df;
+        overflow: hidden;
+      }
+
+      .reward-card h3,
+      .reward-card .stat-note {
+        color: inherit;
+      }
+
+      .reward-badge {
+        width: 82px;
+        height: 82px;
+        border-radius: 28px;
+        display: grid;
+        place-items: center;
+        background: var(--lime);
+        color: #263f2d;
+        font-size: 2.15rem;
+        font-weight: 900;
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
       }
 
       #profile_message {
-        margin: 0;
+        margin: 12px 0 0;
         min-height: 1.2em;
+        color: #e9dcb9;
+        font-size: 0.9rem;
+      }
+
+      .action-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .action-card {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        background: rgba(255, 253, 247, 0.88);
+        text-decoration: none;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 36px rgba(47, 68, 43, 0.13);
+      }
+
+      .action-card .material-symbols-outlined {
+        width: 42px;
+        height: 42px;
+        border-radius: 15px;
+        display: grid;
+        place-items: center;
+        background: #efe4cf;
+        color: #9a6a27;
+      }
+
+      .action-card p {
+        margin: 6px 0 0;
+        color: #736d61;
         font-size: 0.88rem;
-        color: #556074;
+        line-height: 1.5;
       }
 
       .profile-card {
@@ -352,6 +702,16 @@
       body,
       .sidebar,
       #profile_panel,
+      .workspace,
+      .profile-hero,
+      .profile-card-modern,
+      .profile-identity,
+      .profile-section,
+      .reward-card,
+      .action-card,
+      .impact-card,
+      .activity-card,
+      .tip-card,
       .profile-card,
       .stat,
       button,
@@ -383,13 +743,36 @@
         background-color: #1e1e1e;
       }
 
+      body.dark .workspace {
+        background:
+          radial-gradient(
+            circle at 8% 12%,
+            rgba(74, 222, 128, 0.12),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 88% 4%,
+            rgba(45, 212, 191, 0.1),
+            transparent 30%
+          ),
+          linear-gradient(135deg, #171d18 0%, #1f2a21 52%, #141714 100%);
+      }
+
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
       body.dark .topbar h1,
       body.dark #userLabel,
       body.dark .brand,
+      body.dark .profile-name-row h2,
+      body.dark .section-title-row h3,
+      body.dark .action-card h3,
+      body.dark .profile-card-modern h3,
+      body.dark .impact-card h3,
+      body.dark .activity-card h3,
+      body.dark .tip-card h3,
       body.dark .profile-copy h2,
       body.dark .profile-copy p,
       body.dark .stat-label,
@@ -413,10 +796,58 @@
 
       body.dark .card,
       body.dark #profile_panel,
+      body.dark .profile-identity,
+      body.dark .profile-section,
+      body.dark .action-card,
+      body.dark .profile-card-modern,
+      body.dark .impact-card,
+      body.dark .activity-card,
+      body.dark .tip-card,
       body.dark .profile-card,
       body.dark .stat {
-        background-color: #2d2d2d;
+        background-color: rgba(45, 45, 45, 0.86);
         border: 1px solid #3a3a3a;
+      }
+
+      body.dark .profile_stats p,
+      body.dark .setting-row,
+      body.dark .achievement,
+      body.dark .activity-item {
+        background: rgba(33, 44, 35, 0.9);
+        border-color: #36513a;
+      }
+
+      body.dark .identity-body,
+      body.dark #profile_username_input,
+      body.dark #profile_avatar_input {
+        background: #202922;
+        color: #eaeaea;
+        border-color: #36513a;
+      }
+
+      body.dark .profile-role,
+      body.dark .section-title-row p,
+      body.dark .action-card p,
+      body.dark .setting-content label {
+        color: #c7d5ca;
+      }
+
+      body.dark .reward-card {
+        background: #223d2a;
+        border-color: #4f704e;
+      }
+
+      body.dark .profile_stats span,
+      body.dark .mini-stat strong,
+      body.dark .achievement .material-symbols-outlined,
+      body.dark .tip-list .material-symbols-outlined {
+        color: #86efac;
+      }
+
+      body.dark .stat-note,
+      body.dark .tip-list p,
+      body.dark .activity-item small {
+        color: #c7d5ca;
       }
 
       body.dark .pill {
@@ -464,6 +895,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
         }
@@ -477,6 +911,24 @@
         .search {
           justify-self: stretch;
           max-width: none;
+        }
+
+        #profile_panel,
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-identity {
+          position: static;
+        }
+
+        .profile-hero {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .profile-level {
+          width: 100%;
         }
       }
       /* Responsive breakpoint normalization: small<=480, medium 481-768, large 769-1024, xl>=1025 */
@@ -579,6 +1031,34 @@
           grid-template-columns: 1fr !important;
         }
 
+        .profile-hero {
+          min-height: auto;
+          padding: 18px;
+          border-radius: 22px;
+        }
+
+        #profile_avatar_preview {
+          width: 118px;
+          height: 118px;
+          border-radius: 24px;
+        }
+
+        .profile-card-modern,
+        .impact-card,
+        .activity-card,
+        .tip-card {
+          padding: 16px;
+          border-radius: 20px;
+        }
+
+        .profile_stats {
+          grid-template-columns: 1fr;
+        }
+
+        .action-grid {
+          grid-template-columns: 1fr;
+        }
+
         .assets-grid {
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         }
@@ -663,6 +1143,12 @@
           grid-template-columns: 1fr !important;
         }
 
+        #profile_panel,
+        .profile-grid,
+        .profile-hero {
+          grid-template-columns: 1fr;
+        }
+
         .assets-grid {
           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         }
@@ -693,6 +1179,10 @@
 
         .workspace {
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        #profile_panel {
+          grid-template-columns: 1fr;
         }
 
         .hero-panel,
@@ -833,7 +1323,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -881,6 +1372,9 @@
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
           >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
+          >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
             Hành Động</a
@@ -913,30 +1407,122 @@
         </header>
         <main class="workspace">
           <div id="profile_panel">
-            <div class="profile_avatar_section">
-              <img id="profile_avatar_preview" alt="Xem trước ảnh đại diện" />
-              <input type="file" id="profile_avatar_input" accept="image/*" />
-              <button id="profile_avatar_upload" type="button">
-                Tải ảnh đại diện
-              </button>
-            </div>
-            <div class="profile_username_section">
-              <input
-                id="profile_username_input"
-                placeholder="Nhập tên người dùng"
-              />
-              <button id="profile_username_save" type="button">
-                Lưu tên người dùng
-              </button>
-            </div>
-            <div class="profile_stats">
-              <p>Xu: <span id="profile_coin">0</span></p>
-              <p>Chuỗi ngày: <span id="profile_streak">0</span></p>
-            </div>
-            <button id="profile_claim_coin" type="button">
-              Nhận xu hằng ngày
-            </button>
-            <p id="profile_message"></p>
+            <aside class="profile-identity" aria-label="Tổng quan hồ sơ">
+              <div class="identity-cover">
+                <span class="profile-chip">Hồ sơ xanh</span>
+                <span class="profile-code">GT-09</span>
+              </div>
+              <div class="identity-body">
+                <div class="avatar-frame">
+                  <img
+                    id="profile_avatar_preview"
+                    alt="Xem trước ảnh đại diện"
+                  />
+                </div>
+                <div class="profile-name-row">
+                  <h2 id="profile_display_name">Đang tải...</h2>
+                  <p class="profile-role">
+                    Không cần hồ sơ màu mè: chỉ giữ những thứ thật sự dùng được
+                    cho hành động xanh của bạn.
+                  </p>
+                </div>
+                <div class="profile-stats-strip" aria-label="Chỉ số hồ sơ">
+                  <div class="profile_stats">
+                    <p>Xu xanh <span id="profile_coin">0</span></p>
+                    <p>Chuỗi ngày <span id="profile_streak">0</span></p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <section class="profile-workbench" aria-label="Cài đặt hồ sơ">
+              <div class="profile-section">
+                <div class="section-title-row">
+                  <p class="profile-kicker">Account controls</p>
+                  <h3>Thông tin cá nhân</h3>
+                  <p>
+                    Những chỉnh sửa ở đây dùng dữ liệu thật từ tài khoản của
+                    bạn.
+                  </p>
+                </div>
+                <div class="settings-list">
+                  <div class="setting-row profile_avatar_section">
+                    <span class="material-symbols-outlined setting-icon"
+                      >add_photo_alternate</span
+                    >
+                    <div class="setting-content">
+                      <label for="profile_avatar_input">Ảnh đại diện</label>
+                      <p class="stat-note">
+                        Chọn ảnh rõ ràng, ít nhiễu để avatar nhìn tốt trong
+                        sidebar.
+                      </p>
+                      <input
+                        type="file"
+                        id="profile_avatar_input"
+                        accept="image/*"
+                      />
+                      <button id="profile_avatar_upload" type="button">
+                        Tải ảnh lên
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="setting-row profile_username_section">
+                    <span class="material-symbols-outlined setting-icon"
+                      >badge</span
+                    >
+                    <div class="setting-content">
+                      <label for="profile_username_input">Tên hiển thị</label>
+                      <input
+                        id="profile_username_input"
+                        placeholder="Nhập tên người dùng"
+                      />
+                      <button id="profile_username_save" type="button">
+                        Lưu tên
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reward-card">
+                <div class="reward-grid">
+                  <div>
+                    <h3>Thưởng hằng ngày</h3>
+                    <p class="stat-note">
+                      Nhận 10 xu mỗi ngày. Gọn, rõ, không thêm cấp độ giả.
+                    </p>
+                  </div>
+                  <div class="reward-badge" aria-hidden="true">+10</div>
+                </div>
+                <button id="profile_claim_coin" type="button">
+                  Nhận xu hằng ngày
+                </button>
+                <p id="profile_message" role="status"></p>
+              </div>
+
+              <div class="action-grid" aria-label="Gợi ý tiếp theo">
+                <a class="action-card" href="ConfirmAction.html">
+                  <span class="material-symbols-outlined">check_box</span>
+                  <div>
+                    <h3>Xác nhận hành động</h3>
+                    <p>
+                      Ghi nhận đóng góp thật thay vì thêm huy hiệu trang trí.
+                    </p>
+                  </div>
+                </a>
+                <a class="action-card" href="GoGreenMap.html">
+                  <span class="material-symbols-outlined">map</span>
+                  <div>
+                    <h3>Bản đồ Go Green</h3>
+                    <p>
+                      Dùng hồ sơ này như điểm xuất phát cho các hoạt động ngoài
+                      đời.
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </section>
           </div>
         </main>
       </section>
@@ -954,6 +1540,9 @@
         supabase.createClient(profile_SUPABASE_URL, profile_SUPABASE_ANON_KEY);
 
       const profile_userLabel = document.getElementById("userLabel");
+      const profile_displayName = document.getElementById(
+        "profile_display_name",
+      );
       const profile_signOutBtn = document.getElementById("signOutBtn");
       const profile_darkToggle = document.getElementById("darkToggle");
       const profile_avatarPreview = document.getElementById(
@@ -1149,6 +1738,7 @@
             "Thành viên Green";
 
           profile_userLabel.textContent = profile_username;
+          profile_displayName.textContent = profile_username;
           profile_usernameInput.value = profile_data.username || "";
           profile_coinEl.textContent = String(Number(profile_data.coin || 0));
           profile_streakEl.textContent = String(

@@ -1,0 +1,4 @@
+project_id = "pnyjxbrkiifrsrtmnxro"
+
+[functions.green-alert]
+verify_jwt = true

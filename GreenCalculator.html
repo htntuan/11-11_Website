@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <link rel="icon" type="image/x-icon" href="resources/Favicon.png" />
@@ -41,15 +41,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -138,7 +147,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -224,6 +237,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -334,6 +348,11 @@
         grid-template-columns: 1fr;
         gap: 14px;
         align-content: start;
+        background:
+          linear-gradient(rgba(246, 247, 244, 0), rgba(246, 247, 244, 0)),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
       }
 
       .panel {
@@ -433,21 +452,67 @@
         font-family: inherit;
       }
       .calculator-container {
-        width: min(100%, 1120px);
+        width: min(100%, 1180px);
         margin: 0 auto;
-        padding: 8px 4px 20px;
+        padding: 10px 4px 28px;
         display: grid;
-        grid-template-columns: minmax(0, 1.65fr) minmax(280px, 1fr);
-        gap: 18px 20px;
+        grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
+        gap: 18px;
         align-items: start;
+        isolation: isolate;
+      }
+
+      .calculator-hero,
+      .card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #dce5d6;
+        box-shadow: 0 10px 28px rgba(34, 54, 38, 0.08);
+      }
+
+      .calculator-hero {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 22px;
+        align-items: end;
+        min-height: 210px;
+        padding: clamp(22px, 4vw, 38px);
+        border-radius: 18px;
+        color: #f8fff8;
+        background: #1f6f45;
+      }
+
+      .calculator-hero h2 {
+        max-width: 720px;
+        margin: 0;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+
+      .calculator-hero p {
+        max-width: 620px;
+        margin: 16px 0 0;
+        color: rgba(248, 255, 248, 0.78);
+        line-height: 1.7;
+      }
+
+      .hero-orb {
+        width: 150px;
+        height: 150px;
+        display: grid;
+        place-items: center;
+        border-radius: 44px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        font-size: 4.2rem;
       }
 
       .card {
-        background: #fff;
-        border-radius: 14px;
-        padding: 20px;
-        border: 1px solid #e4eadf;
-        box-shadow: 0 8px 18px rgba(37, 47, 66, 0.06);
+        background: #ffffff;
+        border-radius: 16px;
+        padding: clamp(18px, 2.5vw, 26px);
       }
 
       .input-card {
@@ -592,6 +657,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           gap: 10px;
@@ -966,7 +1034,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -1018,6 +1087,9 @@
           <a href="GreenCombat.html"
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
+          >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
           >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận

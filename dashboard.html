@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <link rel="icon" type="image/x-icon" href="resources/Favicon.png" />
@@ -43,15 +43,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -121,7 +130,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -207,6 +220,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -300,6 +314,34 @@
         background: #2d2d2d;
         border-color: #444;
         color: #eaeaea;
+      }
+
+      body.dark .pulse-card,
+      body.dark .green-alert-card,
+      body.dark .alert-dialog {
+        background: #2d2d2d;
+        border-color: #3a3a3a;
+      }
+
+      body.dark .metric-tile,
+      body.dark .alert-steps li,
+      body.dark .camera-capture,
+      body.dark .report-output {
+        background: #252526;
+        border-color: #3a3a3a;
+        color: #eaeaea;
+      }
+
+      body.dark .eyebrow,
+      body.dark .metric-tile span,
+      body.dark .alert-form-grid label {
+        color: #cfcfcf;
+      }
+
+      body.dark .sos-hint {
+        background: #2d2d2d;
+        border-color: #6f2f2f;
+        color: #ffd6bd;
       }
 
       .language {
@@ -431,8 +473,314 @@
         font-family: inherit;
       }
 
+      .command-grid {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 14px;
+      }
+
+      .pulse-card,
+      .green-alert-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid rgba(50, 100, 64, 0.14);
+        box-shadow: 0 18px 45px rgba(44, 73, 38, 0.08);
+      }
+
+      .pulse-card {
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(182, 232, 154, 0.82),
+            transparent 34%
+          ),
+          linear-gradient(135deg, #f8fff0, #dff2d9 55%, #eef8e9);
+      }
+
+      .green-alert-card {
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(255, 174, 88, 0.22),
+            transparent 32%
+          ),
+          linear-gradient(135deg, #fff7ed, #fffdf8 58%, #f2fae9);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: #55705a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .pulse-head,
+      .alert-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .pulse-card h2,
+      .green-alert-card h2 {
+        margin: 0;
+        font-size: clamp(1.55rem, 3vw, 2.35rem);
+        line-height: 1.05;
+      }
+
+      .aqi-orb {
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        background: #dbeee0;
+        border: 8px solid rgba(255, 255, 255, 0.68);
+        box-shadow:
+          inset 0 0 0 1px rgba(41, 66, 43, 0.12),
+          0 16px 34px rgba(52, 85, 47, 0.16);
+        color: #1d3d29;
+        text-align: center;
+      }
+
+      .aqi-emoji {
+        display: block;
+        font-size: 2rem;
+      }
+      .aqi-value {
+        display: block;
+        font-weight: 900;
+        font-size: 1.6rem;
+      }
+
+      .aqi-status {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .metric-tile {
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(76, 112, 70, 0.12);
+      }
+
+      .metric-tile span {
+        display: block;
+        color: #637568;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      .metric-tile strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.98rem;
+      }
+      .status-good .aqi-orb {
+        background: #a9e6a1;
+      }
+      .status-fair .aqi-orb {
+        background: #dced83;
+      }
+      .status-moderate .aqi-orb {
+        background: #ffd36e;
+      }
+      .status-poor .aqi-orb {
+        background: #ff9b63;
+      }
+      .status-very-poor .aqi-orb {
+        background: #ff6b6b;
+        color: #fff;
+      }
+
+      .alert-steps {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .alert-steps li {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid rgba(159, 84, 33, 0.12);
+      }
+
+      .sos-float {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 1200;
+        width: 96px;
+        height: 96px;
+        border: 0;
+        border-radius: 50%;
+        color: #fff;
+        background: conic-gradient(
+          from 0deg,
+          #ff3b30 var(--hold-progress, 0%),
+          #7d1515 0
+        );
+        box-shadow: 0 18px 38px rgba(174, 20, 20, 0.35);
+        cursor: pointer;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+      }
+
+      .sos-float::before {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #ff4d42, #b90f17);
+      }
+
+      .sos-float span {
+        position: relative;
+        display: block;
+      }
+
+      .sos-hint {
+        position: fixed;
+        right: 130px;
+        bottom: 46px;
+        z-index: 1199;
+        max-width: 220px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #fff8f0;
+        border: 1px solid #ffd6bd;
+        color: #683018;
+        font-size: 0.8rem;
+        box-shadow: 0 12px 26px rgba(51, 36, 20, 0.12);
+      }
+
+      .alert-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1300;
+        display: none;
+        place-items: center;
+        padding: 18px;
+        background: rgba(18, 26, 21, 0.58);
+      }
+
+      .alert-modal.open {
+        display: grid;
+      }
+
+      .alert-dialog {
+        width: min(760px, 100%);
+        max-height: min(90vh, 760px);
+        overflow: auto;
+        border-radius: 22px;
+        background: #fffaf4;
+        border: 1px solid #ffe0c6;
+        padding: 22px;
+        box-shadow: 0 28px 70px rgba(12, 21, 15, 0.35);
+      }
+
+      .alert-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .alert-form-grid label {
+        display: grid;
+        gap: 6px;
+        font-weight: 700;
+        color: #38483a;
+      }
+      .alert-form-grid .full {
+        grid-column: 1 / -1;
+      }
+      .alert-form-grid select,
+      .alert-form-grid textarea,
+      .alert-form-grid input {
+        width: 100%;
+        border: 1px solid #ead6c4;
+        border-radius: 12px;
+        padding: 10px 12px;
+        font: inherit;
+        background: #fffdf9;
+      }
+
+      .camera-capture {
+        border: 1px dashed #df9a70;
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff4e8;
+      }
+
+      .camera-preview {
+        margin-top: 10px;
+        min-height: 160px;
+        border-radius: 14px;
+        background: #1c1c1c;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      .camera-preview img {
+        width: 100%;
+        display: block;
+      }
+      .modal-actions {
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn-neutral,
+      .btn-danger {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .btn-neutral {
+        background: #e9ece6;
+        color: #334036;
+      }
+      .btn-danger {
+        background: #d92323;
+        color: #fff;
+      }
+      .report-output {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #eef8e9;
+        color: #24422a;
+        font-size: 0.85rem;
+        white-space: pre-wrap;
+      }
+
       @media (max-width: 1040px) {
         .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        .command-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -481,6 +829,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           padding: 12px;
@@ -790,7 +1141,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -839,6 +1191,9 @@
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
           >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
+          >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
             Hành Động</a
@@ -876,10 +1231,11 @@
 
         <main class="workspace">
           <article class="panel hero-panel">
+            <p class="eyebrow">Green Truth command center</p>
             <h3>Chào mừng quay lại</h3>
             <p>
-              Bảng điều khiển đã sẵn sàng. Dùng menu bên trái để mở Hồ sơ, Tài
-              sản số, Bản đồ Go Green, hoặc Máy tính xanh.
+              Theo dõi chất lượng không khí quanh bạn, mở cảnh báo môi trường
+              khẩn cấp và tiếp tục các hành động xanh trong một bảng điều khiển.
             </p>
             <div class="actions">
               <a class="btn-primary" href="DigitalAssets.html">Mở Tài sản số</a>
@@ -887,30 +1243,94 @@
             </div>
           </article>
 
+          <section class="command-grid">
+            <article class="pulse-card status-moderate" id="airQualityCard">
+              <div class="pulse-head">
+                <div>
+                  <p class="eyebrow">Air Quality Pulse</p>
+                  <h2>Chất lượng không khí quanh bạn</h2>
+                  <p id="aqiDescription">
+                    Đang dùng GPS để chuẩn bị đo ô nhiễm không khí bằng
+                    OpenWeather Air Pollution API.
+                  </p>
+                </div>
+                <div class="aqi-orb" aria-live="polite">
+                  <span>
+                    <span class="aqi-emoji" id="aqiEmoji">😐</span>
+                    <span class="aqi-value" id="aqiValue">--</span>
+                  </span>
+                </div>
+              </div>
+              <div class="aqi-status">
+                <div class="metric-tile">
+                  <span>Mức độ</span>
+                  <strong id="aqiLevel">Chờ dữ liệu</strong>
+                </div>
+                <div class="metric-tile">
+                  <span>Vị trí</span>
+                  <strong id="aqiLocation">Chưa cấp quyền GPS</strong>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn-primary" id="refreshAqiBtn" type="button">
+                  Đo chất lượng không khí
+                </button>
+              </div>
+            </article>
+
+            <article class="green-alert-card">
+              <div class="alert-head">
+                <div>
+                  <p class="eyebrow">Green Alert SOS</p>
+                  <h2>Báo động sự cố môi trường</h2>
+                  <p>
+                    Nhấn giữ nút SOS 3 giây, chọn loại sự cố, chụp ảnh hiện
+                    trường và gửi kèm tọa độ GPS.
+                  </p>
+                </div>
+              </div>
+              <ul class="alert-steps">
+                <li>
+                  <span class="material-symbols-outlined">touch_app</span>Nhấn
+                  giữ để tránh báo nhầm
+                </li>
+                <li>
+                  <span class="material-symbols-outlined">photo_camera</span
+                  >Chụp ảnh trực tiếp từ thiết bị
+                </li>
+                <li>
+                  <span class="material-symbols-outlined">my_location</span>Lấy
+                  tọa độ GPS cho báo cáo
+                </li>
+              </ul>
+            </article>
+          </section>
+
           <article class="panel">
             <h3>Trọng tâm hôm nay</h3>
             <ul class="checklist">
               <li>
-                <span class="material-symbols-outlined">check_circle</span>Rà
-                soát tài sản đã tải lên
+                <span class="material-symbols-outlined">air</span>Kiểm tra AQI
+                trước khi ra ngoài
               </li>
               <li>
-                <span class="material-symbols-outlined">schedule</span>Lên lịch
-                cập nhật bản đồ
+                <span class="material-symbols-outlined">report</span>Gửi Green
+                Alert nếu thấy sự cố
               </li>
               <li>
-                <span class="material-symbols-outlined">edit_square</span>Chuẩn
-                bị dữ liệu cho máy tính
+                <span class="material-symbols-outlined">eco</span>Hoàn thành một
+                hành động xanh
               </li>
             </ul>
           </article>
 
           <article class="panel">
-            <h3>Thẻ không gian làm việc</h3>
-            <div class="tags">
-              <span class="tag">Cacbon</span><span class="tag">Báo cáo</span
-              ><span class="tag">Nhà cung cấp</span>
-            </div>
+            <h3>Mẹo khi AQI xấu</h3>
+            <p>
+              Hạn chế hoạt động ngoài trời, đeo khẩu trang phù hợp và ưu tiên di
+              chuyển bằng phương tiện ít phát thải khi chất lượng không khí
+              giảm.
+            </p>
           </article>
 
           <article class="panel">
@@ -924,6 +1344,86 @@
       </section>
     </div>
     <div id="mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
+    <button
+      class="sos-float"
+      id="sosButton"
+      type="button"
+      aria-label="Nhấn giữ 3 giây để mở Green Alert"
+    >
+      <span>SOS</span>
+    </button>
+    <div class="sos-hint">Nhấn giữ SOS 3 giây để báo sự cố môi trường.</div>
+
+    <section class="alert-modal" id="greenAlertModal" aria-hidden="true">
+      <div
+        class="alert-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="greenAlertTitle"
+      >
+        <p class="eyebrow">Green Alert</p>
+        <h2 id="greenAlertTitle">Báo cáo sự cố môi trường</h2>
+        <p>
+          Chọn loại sự cố, chụp ảnh hiện trường và gửi kèm tọa độ GPS. Email
+          cảnh báo sẽ được gửi trực tiếp bằng Resend.
+        </p>
+        <form id="greenAlertForm" class="alert-form-grid">
+          <label>
+            Loại sự cố
+            <select id="incidentType" required>
+              <option value="Cháy rừng">Cháy rừng</option>
+              <option value="Tràn dầu">Tràn dầu</option>
+              <option value="Rác thải lậu">Rác thải lậu</option>
+              <option value="Ô nhiễm nước">Ô nhiễm nước</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </label>
+          <label>
+            Tọa độ GPS
+            <input
+              id="incidentLocation"
+              type="text"
+              readonly
+              value="Chưa lấy vị trí"
+            />
+          </label>
+          <label class="full">
+            Mô tả nhanh
+            <textarea
+              id="incidentDescription"
+              rows="3"
+              placeholder="Mô tả dấu hiệu, mức độ nguy hiểm hoặc hướng dẫn tiếp cận..."
+            ></textarea>
+          </label>
+          <div class="camera-capture full">
+            <strong>Ảnh hiện trường</strong>
+            <p>Nhấn nút bên dưới để mở camera và chụp ảnh trực tiếp.</p>
+            <input
+              id="incidentCamera"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              required
+            />
+            <div class="camera-preview" id="cameraPreview">Chưa có ảnh</div>
+          </div>
+          <input
+            id="authorityEmail"
+            type="hidden"
+            value="ngoctuantk09@gmail.com"
+          />
+          <div class="modal-actions full">
+            <button class="btn-neutral" id="closeAlertModal" type="button">
+              Hủy
+            </button>
+            <button class="btn-danger" type="submit">
+              Chuẩn bị gửi cảnh báo
+            </button>
+          </div>
+        </form>
+        <div class="report-output" id="alertReportOutput" hidden></div>
+      </div>
+    </section>
 
     <script>
       // 1. CONFIGURATION
@@ -1011,6 +1511,239 @@
       }
 
       initMobileSidebarToggle();
+
+      const OPENWEATHER_API_KEY = "TODO_ADD_OPENWEATHER_API_KEY";
+      const AUTHORITY_CONTACT_EMAIL = "ngoctuantk09@gmail.com";
+
+      function getAqiDetails(aqi) {
+        const details = {
+          1: [
+            "status-good",
+            "Tốt",
+            "😊",
+            "Không khí dễ chịu, phù hợp cho hoạt động ngoài trời.",
+          ],
+          2: [
+            "status-fair",
+            "Khá tốt",
+            "😊",
+            "Ô nhiễm thấp, vẫn nên theo dõi nếu bạn nhạy cảm.",
+          ],
+          3: [
+            "status-moderate",
+            "Trung bình",
+            "😐",
+            "Không khí ở mức trung bình, hãy cân nhắc giảm vận động mạnh ngoài trời.",
+          ],
+          4: [
+            "status-poor",
+            "Xấu",
+            "😟",
+            "Ô nhiễm cao, nên hạn chế ra ngoài và bảo vệ đường hô hấp.",
+          ],
+          5: [
+            "status-very-poor",
+            "Rất xấu",
+            "😢",
+            "Ô nhiễm rất cao, ưu tiên ở trong nhà và tránh hoạt động ngoài trời.",
+          ],
+        };
+        return details[aqi] || details[3];
+      }
+
+      function updateAqiUi(aqi, locationText, updatedText) {
+        const card = document.getElementById("airQualityCard");
+        const [statusClass, label, emoji, description] = getAqiDetails(aqi);
+        card.classList.remove(
+          "status-good",
+          "status-fair",
+          "status-moderate",
+          "status-poor",
+          "status-very-poor",
+        );
+        card.classList.add(statusClass);
+        document.getElementById("aqiValue").textContent = aqi;
+        document.getElementById("aqiEmoji").textContent = emoji;
+        document.getElementById("aqiLevel").textContent = label;
+        document.getElementById("aqiDescription").textContent = description;
+        document.getElementById("aqiLocation").textContent = locationText;
+      }
+
+      function requestCurrentPosition() {
+        return new Promise((resolve, reject) => {
+          if (!navigator.geolocation) {
+            reject(new Error("Trình duyệt không hỗ trợ GPS"));
+            return;
+          }
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000,
+          });
+        });
+      }
+
+      function readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () =>
+            reject(reader.error || new Error("Không đọc được ảnh."));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function refreshAirQuality() {
+        const description = document.getElementById("aqiDescription");
+        description.textContent = "Đang lấy vị trí GPS...";
+        try {
+          const position = await requestCurrentPosition();
+          const lat = position.coords.latitude.toFixed(4);
+          const lon = position.coords.longitude.toFixed(4);
+          const locationText = `${lat}, ${lon}`;
+
+          if (OPENWEATHER_API_KEY.includes("TODO")) {
+            updateAqiUi(3, locationText, "Chờ API key");
+            description.textContent =
+              "Đã lấy GPS. Thêm OpenWeather API key để dùng dữ liệu AQI thật.";
+            return;
+          }
+
+          const endpoint = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}`;
+          const response = await fetch(endpoint);
+          if (!response.ok)
+            throw new Error("Không thể lấy dữ liệu OpenWeather");
+          const data = await response.json();
+          const aqi = data?.list?.[0]?.main?.aqi || 3;
+          updateAqiUi(
+            aqi,
+            locationText,
+            new Date().toLocaleTimeString("vi-VN"),
+          );
+        } catch (error) {
+          description.textContent =
+            error.message || "Không thể lấy chất lượng không khí.";
+          document.getElementById("aqiLocation").textContent = "Không có GPS";
+        }
+      }
+
+      function initGreenAlert() {
+        const sosButton = document.getElementById("sosButton");
+        const modal = document.getElementById("greenAlertModal");
+        const closeBtn = document.getElementById("closeAlertModal");
+        const form = document.getElementById("greenAlertForm");
+        const cameraInput = document.getElementById("incidentCamera");
+        const preview = document.getElementById("cameraPreview");
+        const locationInput = document.getElementById("incidentLocation");
+        const output = document.getElementById("alertReportOutput");
+        let holdTimer;
+        let progressTimer;
+        let progress = 0;
+
+        const openModal = async () => {
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          output.hidden = true;
+          locationInput.value = "Đang lấy GPS...";
+          try {
+            const position = await requestCurrentPosition();
+            locationInput.value = `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`;
+          } catch (error) {
+            locationInput.value = "Không lấy được GPS";
+          }
+        };
+
+        const closeModal = () => {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        };
+
+        const resetHold = () => {
+          clearTimeout(holdTimer);
+          clearInterval(progressTimer);
+          progress = 0;
+          sosButton.style.setProperty("--hold-progress", "0%");
+        };
+
+        const startHold = (event) => {
+          event.preventDefault();
+          resetHold();
+          progressTimer = setInterval(() => {
+            progress = Math.min(progress + 3.34, 100);
+            sosButton.style.setProperty("--hold-progress", `${progress}%`);
+          }, 100);
+          holdTimer = setTimeout(() => {
+            resetHold();
+            openModal();
+          }, 3000);
+        };
+
+        sosButton.addEventListener("pointerdown", startHold);
+        sosButton.addEventListener("pointerup", resetHold);
+        sosButton.addEventListener("pointercancel", resetHold);
+        sosButton.addEventListener("mouseleave", resetHold);
+
+        closeBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (event) => {
+          if (event.target === modal) closeModal();
+        });
+
+        cameraInput.addEventListener("change", () => {
+          const file = cameraInput.files?.[0];
+          if (!file) return;
+          const imageUrl = URL.createObjectURL(file);
+          preview.innerHTML = `<img src="${imageUrl}" alt="Ảnh hiện trường vừa chụp" />`;
+        });
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const imageFile = cameraInput.files?.[0];
+          const imageDataUrl = imageFile
+            ? await readFileAsDataUrl(imageFile)
+            : "";
+          const report = {
+            type: document.getElementById("incidentType").value,
+            location: locationInput.value,
+            description:
+              document.getElementById("incidentDescription").value ||
+              "Không có mô tả",
+            image: imageFile?.name || "Chưa có ảnh",
+            imageName: imageFile?.name || "incident-photo.jpg",
+            imageType: imageFile?.type || "image/jpeg",
+            imageDataUrl,
+            authorityEmail: AUTHORITY_CONTACT_EMAIL,
+            createdAt: new Date().toISOString(),
+            nextStep:
+              "Local backend sẽ gửi email cảnh báo trực tiếp bằng Resend. Kết nối push notification trong bán kính 5km sau.",
+          };
+          output.hidden = false;
+          output.textContent = `${JSON.stringify(report, null, 2)}\n\nĐang gửi email cảnh báo tới ${AUTHORITY_CONTACT_EMAIL}...`;
+
+          fetch("/api/green-alert", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(report),
+          })
+            .then(async (response) => {
+              const payload = await response.json().catch(() => ({}));
+              if (!response.ok) {
+                throw new Error(
+                  payload.error || "Không gửi được email bằng Resend.",
+                );
+              }
+              output.textContent = `${JSON.stringify(report, null, 2)}\n\nĐã gửi email cảnh báo bằng Resend tới ${payload.to || AUTHORITY_CONTACT_EMAIL}.`;
+            })
+            .catch((error) => {
+              output.textContent = `${JSON.stringify(report, null, 2)}\n\nLỗi gửi email Resend: ${error.message}`;
+            });
+        });
+      }
+
+      document
+        .getElementById("refreshAqiBtn")
+        ?.addEventListener("click", refreshAirQuality);
+      initGreenAlert();
+      refreshAirQuality();
 
       // 3. SESSION LISTENER
       // This replaces Firebase's onAuthStateChanged

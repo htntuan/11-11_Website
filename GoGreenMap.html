@@ -53,11 +53,21 @@
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -207,6 +217,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -285,6 +296,15 @@
         border-color: #444;
         color: #eaeaea;
       }
+
+      .workspace {
+        background:
+          linear-gradient(rgba(246, 247, 244, 0), rgba(246, 247, 244, 0)),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
+      }
+
       .map-area {
         padding: 24px;
         height: calc(100vh - 130px);
@@ -687,6 +707,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           padding: 12px;
@@ -996,7 +1019,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -1044,6 +1068,9 @@
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
           >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
+          >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
             Hành Động</a
@@ -1075,11 +1102,13 @@
           </div>
         </header>
 
-        <div class="map-area">
-          <div class="map-card">
-            <div id="map"></div>
+        <section class="workspace">
+          <div class="map-area">
+            <div class="map-card">
+              <div id="map"></div>
+            </div>
           </div>
-        </div>
+        </section>
       </section>
     </div>
     <div id="mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
@@ -2125,4 +2154,3 @@
     </script>
   </body>
 </html>
-

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <link rel="icon" type="image/x-icon" href="resources/Favicon.png" />
@@ -40,15 +40,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -109,7 +118,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -151,19 +164,53 @@
       }
 
       .workspace {
-        padding: 16px;
+        position: relative;
+        padding: clamp(18px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr;
-        grid-auto-rows: minmax(80px, auto);
-        gap: 14px;
+        gap: 18px;
         align-content: start;
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(191, 220, 109, 0.35),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(42, 96, 71, 0.2),
+            transparent 28%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(252, 250, 239, 0.92),
+            rgba(235, 244, 224, 0.88)
+          ),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .workspace::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(34, 83, 47, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(34, 83, 47, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+        pointer-events: none;
       }
 
       .panel {
-        background: var(--panel-soft);
-        border: 1px solid #e0e5dc;
-        border-radius: 12px;
-        padding: 16px;
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 253, 246, 0.9);
+        border: 1px solid rgba(205, 191, 162, 0.78);
+        border-radius: 28px;
+        padding: clamp(18px, 2.4vw, 28px);
+        box-shadow: 0 24px 60px rgba(44, 66, 40, 0.12);
+        backdrop-filter: blur(16px);
       }
 
       .panel h3 {
@@ -172,32 +219,80 @@
       }
 
       .assets-toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: end;
+        margin-bottom: 20px;
+      }
+
+      .assets-kicker {
+        margin: 0 0 8px;
+        color: #8b6128;
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .assets-toolbar h3 {
+        color: #173721;
+        font-size: clamp(2rem, 4vw, 4rem);
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+      }
+
+      .assets-lede {
+        max-width: 620px;
+        margin: 12px 0 0;
+        color: #676052;
+        line-height: 1.6;
+      }
+
+      .asset-controls {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
+        justify-content: flex-end;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .filter-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 1px solid #d9cfbc;
+        border-radius: 999px;
+        background: #fffaf0;
+        color: #394432;
+        font-size: 0.88rem;
+        font-weight: 800;
+        cursor: pointer;
       }
 
       .assets-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
       }
 
       .empty-state {
-        color: var(--muted);
+        color: #6c665b;
         text-align: center;
-        padding: 20px;
-        border: 1px dashed var(--line);
-        border-radius: 10px;
-        background: #f7faf5;
+        padding: 40px 20px;
+        border: 1px dashed #c8b996;
+        border-radius: 22px;
+        background: rgba(255, 250, 240, 0.7);
       }
 
       .asset-card {
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: #fff;
+        border: 1px solid #ded2b9;
+        border-radius: 24px;
+        background: #fffdf7;
         overflow: hidden;
+        box-shadow: 0 14px 34px rgba(47, 68, 43, 0.08);
         transition:
           transform 180ms ease,
           box-shadow 180ms ease;
@@ -209,9 +304,16 @@
       }
 
       .asset-preview {
-        height: 130px;
-        background: #eef3ea;
-        border-bottom: 1px solid var(--line);
+        position: relative;
+        height: 170px;
+        background:
+          radial-gradient(
+            circle at 30% 25%,
+            rgba(234, 191, 103, 0.28),
+            transparent 32%
+          ),
+          linear-gradient(135deg, #eef4df, #dfe9d6);
+        border-bottom: 1px solid #ded2b9;
         display: grid;
         place-items: center;
         overflow: hidden;
@@ -224,22 +326,30 @@
       }
 
       .asset-preview .placeholder {
-        color: #5b6475;
-        font-weight: 700;
+        width: 82px;
+        height: 82px;
+        border-radius: 26px;
+        display: grid;
+        place-items: center;
+        background: #24452d;
+        color: #fff8df;
+        font-weight: 900;
+        letter-spacing: 0.08em;
       }
 
       .asset-content {
-        padding: 10px;
+        padding: 16px;
       }
 
       .asset-title {
         margin: 0 0 6px;
-        font-size: 0.95rem;
+        color: #173721;
+        font-size: 1.05rem;
       }
 
       .asset-description {
         margin: 0;
-        color: #555;
+        color: #6b665a;
         font-size: 0.86rem;
         line-height: 1.4;
         min-height: 2.8em;
@@ -248,6 +358,41 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+      }
+
+      .asset-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .asset-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .asset-type-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #e6f1d2;
+        color: #24452d;
+        font-size: 0.72rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .asset-date {
+        color: #8a806f;
+        font-size: 0.78rem;
+        font-weight: 700;
       }
       button {
         border: none;
@@ -276,13 +421,15 @@
       }
 
       .btn-primary {
-        background: var(--accent);
-        color: #fff;
+        background: #24452d;
+        color: #fff8df;
+        font-weight: 800;
       }
 
       .btn-neutral {
-        background: #e9efe5;
-        color: #3b4659;
+        background: #efe6d2;
+        color: #394432;
+        font-weight: 800;
       }
 
       .btn-danger {
@@ -291,7 +438,7 @@
       }
 
       .modal {
-        position: absolute;
+        position: fixed;
         inset: 0;
         display: grid;
         place-items: center;
@@ -309,7 +456,8 @@
       .modal-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(20, 28, 19, 0.56);
+        backdrop-filter: blur(5px);
       }
 
       .modal-card {
@@ -317,10 +465,10 @@
         width: min(92vw, 560px);
         max-height: 88vh;
         overflow: auto;
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 14px;
+        background: #fffdf7;
+        border: 1px solid #d9cfbc;
+        border-radius: 26px;
+        padding: 22px;
         opacity: 0;
         transform: scale(0.9);
         pointer-events: none;
@@ -349,7 +497,7 @@
 
       .upload-form {
         display: grid;
-        gap: 10px;
+        gap: 14px;
       }
 
       .upload-form label {
@@ -361,9 +509,10 @@
       .upload-form textarea {
         width: 100%;
         border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 8px;
+        border-radius: 14px;
+        padding: 12px;
         font: inherit;
+        background: #fffaf0;
       }
 
       .upload-form textarea {
@@ -412,6 +561,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -443,6 +593,41 @@
       body.dark .modal-card {
         background-color: #2d2d2d;
         border: 1px solid #3a3a3a;
+      }
+
+      body.dark .workspace {
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(109, 189, 95, 0.18),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(182, 232, 154, 0.1),
+            transparent 28%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(30, 30, 30, 0.94),
+            rgba(24, 33, 25, 0.92)
+          ),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
+      }
+
+      body.dark .assets-kicker,
+      body.dark .assets-lede,
+      body.dark .asset-date {
+        color: #cfcfcf;
+      }
+
+      body.dark .filter-pill,
+      body.dark .asset-type-badge {
+        background: #253321;
+        border-color: #3a3a3a;
+        color: #dff5c7;
       }
 
       body.dark .asset-preview {
@@ -494,6 +679,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           gap: 10px;
@@ -609,6 +797,18 @@
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         }
 
+        .assets-toolbar,
+        .asset-controls {
+          grid-template-columns: 1fr;
+          justify-content: stretch;
+        }
+
+        .asset-controls,
+        .filter-pill,
+        #openUploadBtn {
+          width: 100%;
+        }
+
         .camera-controls {
           flex-direction: column;
         }
@@ -691,6 +891,14 @@
 
         .assets-grid {
           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .assets-toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .asset-controls {
+          justify-content: flex-start;
         }
 
         .map-area {
@@ -859,7 +1067,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -908,6 +1117,9 @@
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
           >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
+          >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
             Hành Động</a
@@ -942,17 +1154,16 @@
         <section id="digital-assets-workspace" class="workspace">
           <article class="panel">
             <div class="assets-toolbar">
-              <h3>Tài Sản Số</h3>
-              <div style="display: flex; align-items: center; gap: 12px">
-                <label
-                  style="
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    font-size: 0.88rem;
-                    cursor: pointer;
-                  "
-                >
+              <div>
+                <p class="assets-kicker">Green Truth resource vault</p>
+                <h3>Tài Sản Số</h3>
+                <p class="assets-lede">
+                  Lưu trữ hình ảnh, video và PDF cho các chiến dịch xanh trong
+                  một thư viện trực quan, dễ xem lại và chia sẻ.
+                </p>
+              </div>
+              <div class="asset-controls">
+                <label class="filter-pill">
                   <input id="myAssetsSwitch" type="checkbox" /> Tài Sản của tôi
                 </label>
                 <button id="openUploadBtn" class="btn-primary" type="button">
@@ -1172,6 +1383,17 @@
         return `<div class="placeholder">FILE</div>`;
       }
 
+      function formatAssetDate(value) {
+        if (!value) return "New";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "New";
+        return date.toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+      }
+
       function renderAssets() {
         if (state.orderedIds.length === 0) {
           assetGrid.innerHTML = "";
@@ -1191,11 +1413,16 @@
 
             const isOwner =
               String(asset.user_id) === String(state.currentUserId);
+            const typeLabel = asset.file_type || "file";
 
             return `
                     <article class="asset-card" data-id="${escapeHtml(asset.id)}">
                       <div class="asset-preview">${renderThumbnail(asset)}</div>
                       <div class="asset-content">
+                        <div class="asset-meta">
+                          <span class="asset-type-badge">${escapeHtml(typeLabel)}</span>
+                          <span class="asset-date">${escapeHtml(formatAssetDate(asset.created_at))}</span>
+                        </div>
                         <h4 class="asset-title">${escapeHtml(asset.title || "Untitled")}</h4>
                         <p class="asset-description">${escapeHtml(asset.description || "")}</p>
                         <div class="asset-actions">

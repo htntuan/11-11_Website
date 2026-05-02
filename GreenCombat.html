@@ -40,15 +40,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -137,7 +146,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -223,6 +236,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -335,6 +349,11 @@
         grid-auto-rows: minmax(140px, auto);
         gap: 14px;
         align-content: start;
+        background:
+          linear-gradient(rgba(246, 247, 244, 0), rgba(246, 247, 244, 0)),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
       }
 
       .panel {
@@ -434,6 +453,500 @@
         font-family: inherit;
       }
 
+      .combat-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .hero-panel {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #d6ead2;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        inset: auto -40px -60px auto;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(
+          circle,
+          rgba(109, 189, 95, 0.24),
+          transparent 68%
+        );
+        pointer-events: none;
+      }
+
+      .hero-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #40673a;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        margin: 14px 0 10px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .hero-copy {
+        max-width: 62ch;
+        color: #334253;
+      }
+
+      .hero-metrics,
+      .stats-row,
+      .mini-stats {
+        display: grid;
+        gap: 10px;
+      }
+
+      .hero-metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 16px;
+      }
+
+      .metric-card,
+      .stat-tile,
+      .rank-card,
+      .mission-card,
+      .history-item,
+      .badge-item,
+      .team-card,
+      .submission-card {
+        border-radius: 14px;
+        border: 1px solid #dfe8d9;
+        background: #fbfcfa;
+      }
+
+      .metric-card,
+      .stat-tile,
+      .rank-card,
+      .mission-card,
+      .badge-item,
+      .team-card,
+      .history-item {
+        padding: 14px;
+      }
+
+      .metric-label,
+      .stat-label,
+      .section-kicker,
+      .tiny-label {
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: #72806d;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .metric-value,
+      .stat-value {
+        margin-top: 6px;
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      .metric-help,
+      .stat-help,
+      .muted-copy,
+      .history-meta {
+        margin-top: 6px;
+        font-size: 0.84rem;
+        color: #6d7587;
+      }
+
+      .hero-side {
+        padding: 16px;
+        border-radius: 16px;
+        background: linear-gradient(160deg, #255a37, #3a7d44 62%, #69a65a);
+        color: #fff;
+      }
+
+      .hero-side h3,
+      .hero-side p,
+      .hero-side .tiny-label,
+      .hero-side .stat-help {
+        color: #fff;
+      }
+
+      .mini-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 14px;
+      }
+
+      .mini-stat {
+        border-radius: 12px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .mini-stat strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 1.15rem;
+      }
+
+      .stats-row {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .section-span-8 {
+        grid-column: span 8;
+      }
+
+      .section-span-4 {
+        grid-column: span 4;
+      }
+
+      .section-span-6 {
+        grid-column: span 6;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .section-header h3,
+      .section-header p {
+        margin: 0;
+      }
+
+      .pill-row,
+      .chip-row,
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill,
+      .chip,
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .pill {
+        background: #ebf6e6;
+        color: #3d6940;
+      }
+
+      .chip {
+        background: #eef2eb;
+        color: #5f6879;
+        border: 1px solid #d9e1d3;
+      }
+
+      .status-pill.pending {
+        background: #fff3d8;
+        color: #9b6a08;
+      }
+
+      .status-pill.approved {
+        background: #dff6de;
+        color: #25613a;
+      }
+
+      .status-pill.rejected {
+        background: #fde2e2;
+        color: #9f3333;
+      }
+
+      .leaderboard-tabs {
+        display: inline-flex;
+        gap: 8px;
+        padding: 4px;
+        border-radius: 999px;
+        background: #eef2eb;
+      }
+
+      .tab-btn {
+        border: none;
+        border-radius: 999px;
+        padding: 9px 14px;
+        background: transparent;
+        color: #526176;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .tab-btn.active {
+        background: #ffffff;
+        color: #28583f;
+        box-shadow: 0 1px 2px rgba(26, 44, 18, 0.1);
+      }
+
+      .leaderboard-list,
+      .mission-list,
+      .history-list,
+      .badge-list,
+      .team-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .rank-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .rank-number {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #edf6e8;
+        color: #2f6d3c;
+        font-weight: 800;
+      }
+
+      .rank-main {
+        display: grid;
+        gap: 4px;
+      }
+
+      .rank-name {
+        font-weight: 700;
+      }
+
+      .rank-score {
+        text-align: right;
+        font-weight: 700;
+      }
+
+      .mission-card {
+        padding: 16px;
+      }
+
+      .mission-card h4,
+      .badge-item h4,
+      .team-card h4 {
+        margin: 0;
+      }
+
+      .mission-card p,
+      .badge-item p,
+      .team-card p,
+      .history-item p {
+        margin: 8px 0 0;
+        color: #556174;
+      }
+
+      .mission-footer,
+      .history-footer,
+      .submission-actions {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .action-btn,
+      .secondary-btn,
+      .ghost-btn {
+        min-height: 44px;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .action-btn {
+        border: none;
+        background: linear-gradient(135deg, #3e8249, #6dbd5f);
+        color: #fff;
+      }
+
+      .secondary-btn {
+        border: none;
+        background: #e7f2e3;
+        color: #2c5f35;
+      }
+
+      .ghost-btn {
+        border: 1px solid #d4dfcf;
+        background: #fff;
+        color: #445267;
+      }
+
+      .submission-card {
+        padding: 16px;
+        background: linear-gradient(180deg, #f9fbf7, #f2f6ef);
+      }
+
+      .submission-form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #445267;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        border-radius: 10px;
+        border: 1px solid #d6ddd1;
+        padding: 11px 12px;
+        background: #ffffff;
+        font: inherit;
+      }
+
+      .submission-hint {
+        padding: 12px;
+        border-radius: 12px;
+        background: #edf6e8;
+        color: #2f6840;
+        font-size: 0.88rem;
+      }
+
+      .history-item,
+      .badge-item,
+      .team-card {
+        display: grid;
+        gap: 8px;
+      }
+
+      .progress-bar {
+        height: 9px;
+        border-radius: 999px;
+        background: #e6ece1;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #4c8a4d, #8acb68);
+      }
+
+      .empty-state {
+        padding: 18px;
+        border-radius: 14px;
+        border: 1px dashed #cbd7c4;
+        background: #f7faf5;
+        text-align: center;
+        color: #6a7385;
+      }
+
+      .data-error {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #fff2f2;
+        border: 1px solid #f0cccc;
+        color: #983535;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      body.dark .metric-card,
+      body.dark .stat-tile,
+      body.dark .rank-card,
+      body.dark .mission-card,
+      body.dark .history-item,
+      body.dark .badge-item,
+      body.dark .team-card,
+      body.dark .submission-card,
+      body.dark .mini-stat {
+        background: #2a2a2a;
+        border-color: #3a3a3a;
+      }
+
+      body.dark .hero-panel {
+        background: linear-gradient(120deg, #213124, #1c271f);
+        border-color: #344235;
+      }
+
+      body.dark .hero-copy,
+      body.dark .metric-help,
+      body.dark .stat-help,
+      body.dark .muted-copy,
+      body.dark .history-meta,
+      body.dark .mission-card p,
+      body.dark .badge-item p,
+      body.dark .team-card p,
+      body.dark .history-item p,
+      body.dark .field label {
+        color: #cbd2de;
+      }
+
+      body.dark .pill,
+      body.dark .chip,
+      body.dark .leaderboard-tabs,
+      body.dark .submission-hint,
+      body.dark .empty-state,
+      body.dark .rank-number {
+        background: #202820;
+        color: #e0eadb;
+        border-color: #374237;
+      }
+
+      body.dark .tab-btn.active,
+      body.dark .ghost-btn,
+      body.dark .field input,
+      body.dark .field select,
+      body.dark .field textarea {
+        background: #1f1f1f;
+        color: #f2f2f2;
+        border-color: #404040;
+      }
+
+      body.dark .data-error {
+        background: #422727;
+        border-color: #6b3737;
+        color: #ffd3d3;
+      }
+
       @media (max-width: 1040px) {
         .workspace {
           grid-template-columns: 1fr;
@@ -452,6 +965,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           gap: 10px;
@@ -656,6 +1172,20 @@
           grid-template-columns: 1fr !important;
         }
 
+        .stats-row,
+        .hero-metrics,
+        .field-grid,
+        .hero-layout,
+        .mini-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .section-span-8,
+        .section-span-6,
+        .section-span-4 {
+          grid-column: 1 / -1;
+        }
+
         .assets-grid {
           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         }
@@ -686,6 +1216,12 @@
 
         .workspace {
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .section-span-8,
+        .section-span-6,
+        .section-span-4 {
+          grid-column: 1 / -1;
         }
 
         .hero-panel,
@@ -753,6 +1289,206 @@
         z-index: 1090;
       }
 
+      .team-modal-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(16, 24, 32, 0.55);
+        z-index: 1200;
+      }
+
+      .team-modal-overlay[hidden] {
+        display: none;
+      }
+
+      .team-modal {
+        width: min(720px, 100%);
+        background: #ffffff;
+        border: 1px solid #d9e3d2;
+        border-radius: 24px;
+        box-shadow: 0 22px 60px rgba(25, 39, 27, 0.18);
+        overflow: hidden;
+      }
+
+      .team-modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 24px 14px;
+        border-bottom: 1px solid #e4ebde;
+      }
+
+      .team-modal-header h3 {
+        margin: 4px 0 6px;
+        font-size: 1.35rem;
+      }
+
+      .team-modal-header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid #d3ddcb;
+        background: #ffffff;
+        color: #455164;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .team-modal-body {
+        padding: 22px 24px 24px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .team-modal-tabs {
+        display: inline-grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        background: #eef3ea;
+        padding: 6px;
+        border-radius: 16px;
+      }
+
+      .team-modal-tab {
+        border: none;
+        background: transparent;
+        color: #60705f;
+        font-weight: 700;
+        border-radius: 12px;
+        padding: 10px 16px;
+        cursor: pointer;
+      }
+
+      .team-modal-tab.active {
+        background: #ffffff;
+        color: #21472b;
+        box-shadow: 0 8px 20px rgba(74, 113, 64, 0.12);
+      }
+
+      .team-panel-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .team-idea-card,
+      .team-form-panel {
+        border: 1px solid #dfe8d9;
+        border-radius: 18px;
+        padding: 18px;
+        background: linear-gradient(180deg, #fbfdf9 0%, #f3f7ef 100%);
+      }
+
+      .team-idea-card h4,
+      .team-form-panel h4 {
+        margin: 0 0 8px;
+        font-size: 1.02rem;
+      }
+
+      .team-idea-card p,
+      .team-form-panel p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .team-checklist {
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .team-checklist li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: #44525d;
+      }
+
+      .team-checklist .material-symbols-outlined {
+        color: #2f7d45;
+        font-size: 1.1rem;
+        margin-top: 1px;
+      }
+
+      .team-form {
+        display: grid;
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .team-form .field label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .team-form .field input,
+      .team-form .field textarea {
+        width: 100%;
+      }
+
+      .team-form-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .helper-copy {
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      body.dark .team-modal {
+        background: #252526;
+        border-color: #3a3a3a;
+      }
+
+      body.dark .team-modal-header {
+        border-bottom-color: #3a3a3a;
+      }
+
+      body.dark .icon-btn,
+      body.dark .team-modal-tab.active {
+        background: #2d2d2d;
+        border-color: #444;
+        color: #eaeaea;
+      }
+
+      body.dark .team-modal-tabs {
+        background: #1f2420;
+      }
+
+      body.dark .team-modal-tab {
+        color: #c8d1c6;
+      }
+
+      body.dark .team-idea-card,
+      body.dark .team-form-panel {
+        background: linear-gradient(180deg, #2b312c 0%, #232723 100%);
+        border-color: #3b453b;
+      }
+
+      body.dark .team-checklist li,
+      body.dark .helper-copy {
+        color: #cfd6d0;
+      }
+
       body.menu-open {
         overflow: hidden;
       }
@@ -815,6 +1551,19 @@
           overflow-y: auto;
         }
 
+        .team-panel-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .team-modal-overlay {
+          padding: 12px;
+          align-items: flex-end;
+        }
+
+        .team-modal {
+          border-radius: 24px 24px 0 0;
+        }
+
         body.menu-open .sidebar {
           transform: translateX(0);
         }
@@ -826,7 +1575,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -874,6 +1624,9 @@
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
           >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
+          >
           <a href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
             Hành Động</a
@@ -904,9 +1657,431 @@
             <span id="userLabel">Người dùng khách</span>
           </div>
         </header>
+
+        <main class="workspace">
+          <section class="panel hero-panel">
+            <div class="hero-layout">
+              <div>
+                <span class="eyebrow">
+                  <span class="material-symbols-outlined">bolt</span>
+                  Green Combat Season
+                </span>
+                <h2 class="hero-title">
+                  Thi đua bằng hành động xanh thật ngoài đời.
+                </h2>
+                <p class="hero-copy">
+                  Green Combat biến việc trồng cây, chăm cây, nhặt rác và duy
+                  trì thói quen xanh thành một cuộc đua có xác minh, có bảng xếp
+                  hạng và có dấu ấn tập thể.
+                </p>
+                <div class="hero-panel actions">
+                  <button id="joinTeamBtn" class="action-btn" type="button">
+                    Tham gia đội
+                  </button>
+                  <button
+                    id="jumpToSubmissionBtn"
+                    class="secondary-btn"
+                    type="button"
+                  >
+                    Gửi hành động
+                  </button>
+                  <button id="refreshCombatBtn" class="ghost-btn" type="button">
+                    Làm mới dữ liệu
+                  </button>
+                </div>
+                <div class="hero-metrics">
+                  <article class="metric-card">
+                    <div class="metric-label">Hạng hiện tại</div>
+                    <div id="heroRankValue" class="metric-value">#--</div>
+                    <div class="metric-help">
+                      Xếp hạng cá nhân trong mùa hiện tại
+                    </div>
+                  </article>
+                  <article class="metric-card">
+                    <div class="metric-label">Điểm chiến dịch</div>
+                    <div id="heroPointsValue" class="metric-value">0</div>
+                    <div class="metric-help">
+                      Tổng điểm từ hành động đã duyệt
+                    </div>
+                  </article>
+                  <article class="metric-card">
+                    <div class="metric-label">Chuỗi duy trì</div>
+                    <div id="heroStreakValue" class="metric-value">0 ngày</div>
+                    <div class="metric-help">
+                      Đo mức độ bền bỉ thay vì phong trào
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+              <aside class="hero-side">
+                <div class="tiny-label">Tuyên ngôn Green Truth</div>
+                <h3>Không phải game ảo. Đây là bảng điểm cho tác động thật.</h3>
+                <p>
+                  Mỗi lượt cộng điểm nên đi kèm bằng chứng, trách nhiệm và khả
+                  năng duy trì. Càng ít “greenwashing”, càng leo hạng bền vững.
+                </p>
+                <div class="mini-stats">
+                  <div class="mini-stat">
+                    <span class="tiny-label">Mùa đang chạy</span>
+                    <strong id="seasonLabel">April Sprint</strong>
+                  </div>
+                  <div class="mini-stat">
+                    <span class="tiny-label">Đội của bạn</span>
+                    <strong id="teamSummaryValue">Chưa tham gia</strong>
+                  </div>
+                  <div class="mini-stat">
+                    <span class="tiny-label">Hành động đã duyệt</span>
+                    <strong id="approvedCountValue">0</strong>
+                  </div>
+                  <div class="mini-stat">
+                    <span class="tiny-label">Mục tiêu gần nhất</span>
+                    <strong>Top 10 cá nhân</strong>
+                  </div>
+                </div>
+              </aside>
+            </div>
+            <div id="combatError" class="data-error hidden"></div>
+          </section>
+
+          <section class="combat-grid">
+            <section class="panel stats-row">
+              <article class="stat-tile">
+                <div class="stat-label">Người tham gia</div>
+                <div id="participantsValue" class="stat-value">0</div>
+                <div class="stat-help">Tổng tài khoản có điểm hoặc bài gửi</div>
+              </article>
+              <article class="stat-tile">
+                <div class="stat-label">Đội đang hoạt động</div>
+                <div id="teamsValue" class="stat-value">0</div>
+                <div class="stat-help">Các lớp/nhóm đã vào mùa thi đua</div>
+              </article>
+              <article class="stat-tile">
+                <div class="stat-label">Hành động đã duyệt</div>
+                <div id="approvedActionsValue" class="stat-value">0</div>
+                <div class="stat-help">Bằng chứng đã được phê duyệt</div>
+              </article>
+              <article class="stat-tile">
+                <div class="stat-label">Tổng điểm toàn mùa</div>
+                <div id="globalPointsValue" class="stat-value">0</div>
+                <div class="stat-help">Điểm được sinh từ các tác động thật</div>
+              </article>
+            </section>
+
+            <section class="panel section-span-8">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Leaderboard</div>
+                  <h3>Bảng xếp hạng xanh</h3>
+                  <p class="muted-copy">
+                    Theo dõi cá nhân và đội đang dẫn đầu mùa thi đua.
+                  </p>
+                </div>
+                <div
+                  class="leaderboard-tabs"
+                  role="tablist"
+                  aria-label="Leaderboard tabs"
+                >
+                  <button class="tab-btn active" type="button" data-tab="users">
+                    Cá nhân
+                  </button>
+                  <button class="tab-btn" type="button" data-tab="teams">
+                    Đội
+                  </button>
+                </div>
+              </div>
+              <div id="usersLeaderboard" class="leaderboard-list"></div>
+              <div id="teamsLeaderboard" class="leaderboard-list hidden"></div>
+            </section>
+
+            <section class="panel section-span-4">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Your teams</div>
+                  <h3>Nhóm bạn đang góp sức</h3>
+                  <p class="muted-copy">
+                    Dùng team mode để đẩy tinh thần lớp và trách nhiệm tập thể.
+                  </p>
+                </div>
+              </div>
+              <div id="teamList" class="team-list"></div>
+            </section>
+
+            <section class="panel section-span-8">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Missions</div>
+                  <h3>Nhiệm vụ đang mở</h3>
+                  <p class="muted-copy">
+                    Mỗi nhiệm vụ nên gắn với tác động thật, minh chứng rõ và
+                    điểm thưởng minh bạch.
+                  </p>
+                </div>
+              </div>
+              <div id="missionList" class="mission-list"></div>
+            </section>
+
+            <section class="panel section-span-4">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Badges</div>
+                  <h3>Huy hiệu tiến độ</h3>
+                  <p class="muted-copy">
+                    Khen thưởng sự duy trì, không chỉ khoảnh khắc check-in.
+                  </p>
+                </div>
+              </div>
+              <div id="badgeList" class="badge-list"></div>
+            </section>
+
+            <section id="submissionSection" class="panel section-span-6">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Submit proof</div>
+                  <h3>Gửi hành động để xét duyệt</h3>
+                  <p class="muted-copy">
+                    Bắt đầu với bài gửi thủ công, sau đó có thể nối thêm xác
+                    minh tự động từ các tính năng khác.
+                  </p>
+                </div>
+              </div>
+              <div class="submission-card">
+                <form id="submissionForm" class="submission-form">
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="missionSelect">Nhiệm vụ</label>
+                      <select id="missionSelect" required></select>
+                    </div>
+                    <div class="field">
+                      <label for="teamSelect">Đội</label>
+                      <select id="teamSelect">
+                        <option value="">Không gắn đội</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="plantSelect">Cây liên quan</label>
+                      <select id="plantSelect">
+                        <option value="">Không liên kết cây</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="quantityInput">Số lượng</label>
+                      <input
+                        id="quantityInput"
+                        type="number"
+                        min="0"
+                        placeholder="Ví dụ: 3 bao rác"
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="proofUrlInput">URL ảnh minh chứng</label>
+                    <input
+                      id="proofUrlInput"
+                      type="url"
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="noteInput">Ghi chú</label>
+                    <textarea
+                      id="noteInput"
+                      rows="5"
+                      placeholder="Mô tả ngắn hành động, thời gian, địa điểm và tác động thực tế"
+                    ></textarea>
+                  </div>
+                  <div class="submission-hint">
+                    MVP này ưu tiên luồng rõ ràng: tạo bài gửi `pending`, admin
+                    duyệt, trigger cộng điểm. Nếu bạn đã có storage bucket, bước
+                    tiếp theo là thay URL thủ công bằng upload thật.
+                  </div>
+                  <div class="submission-actions">
+                    <button class="action-btn" type="submit">
+                      Tạo submission
+                    </button>
+                    <button
+                      id="prefillPlantCareBtn"
+                      class="ghost-btn"
+                      type="button"
+                    >
+                      Điền mẫu chăm cây
+                    </button>
+                  </div>
+                </form>
+                <div id="submissionFeedback" class="data-error hidden"></div>
+              </div>
+            </section>
+
+            <section class="panel section-span-6">
+              <div class="section-header">
+                <div>
+                  <div class="section-kicker">Recent activity</div>
+                  <h3>Lịch sử bài gửi gần đây</h3>
+                  <p class="muted-copy">
+                    Theo dõi trạng thái `pending`, `approved`, `rejected` và
+                    phản hồi từ người duyệt.
+                  </p>
+                </div>
+              </div>
+              <div id="historyList" class="history-list"></div>
+            </section>
+          </section>
+        </main>
       </section>
     </div>
     <div id="mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
+    <div id="teamModalOverlay" class="team-modal-overlay" hidden>
+      <div
+        class="team-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="teamModalTitle"
+      >
+        <div class="team-modal-header">
+          <div>
+            <div class="section-kicker">Team mode</div>
+            <h3 id="teamModalTitle">Tạo đội mới hoặc tham gia bằng mã</h3>
+            <p>
+              Đây là bước hợp lý tiếp theo sau leaderboard: cho người dùng thật
+              sự gia nhập cơ chế thi đua thay vì chỉ xem dữ liệu.
+            </p>
+          </div>
+          <button
+            id="closeTeamModalBtn"
+            class="icon-btn"
+            type="button"
+            aria-label="Đóng cửa sổ đội"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="team-modal-body">
+          <div class="team-modal-tabs" role="tablist" aria-label="Chế độ đội">
+            <button
+              id="createTeamTab"
+              class="team-modal-tab active"
+              type="button"
+              data-team-tab="create"
+            >
+              Tạo đội
+            </button>
+            <button
+              id="joinTeamTab"
+              class="team-modal-tab"
+              type="button"
+              data-team-tab="join"
+            >
+              Tham gia bằng mã
+            </button>
+          </div>
+
+          <div class="team-panel-grid">
+            <section class="team-idea-card">
+              <h4>Tinh thần của Green Combat</h4>
+              <p>
+                Mỗi đội nên đại diện cho một lớp, nhóm hoặc cộng đồng nhỏ có thể
+                tự nhắc nhau duy trì hành động xanh trong thời gian dài.
+              </p>
+              <ul class="team-checklist">
+                <li>
+                  <span class="material-symbols-outlined">verified</span
+                  ><span>Điểm đội cộng từ các submission đã được duyệt.</span>
+                </li>
+                <li>
+                  <span class="material-symbols-outlined">groups</span
+                  ><span
+                    >Team mode giúp biến trách nhiệm cá nhân thành mục tiêu
+                    chung.</span
+                  >
+                </li>
+                <li>
+                  <span class="material-symbols-outlined">flag</span
+                  ><span
+                    >Bắt đầu đơn giản với mã đội ngắn, dễ chia sẻ trong
+                    lớp.</span
+                  >
+                </li>
+              </ul>
+            </section>
+
+            <section class="team-form-panel">
+              <div id="createTeamPanel">
+                <h4>Tạo đội mới</h4>
+                <p>
+                  Người tạo sẽ trở thành `owner` của đội và được thêm vào ngay.
+                </p>
+                <form id="createTeamForm" class="team-form">
+                  <div class="field">
+                    <label for="teamNameInput">Tên đội</label>
+                    <input
+                      id="teamNameInput"
+                      type="text"
+                      maxlength="80"
+                      placeholder="Ví dụ: 11A1 Green Force"
+                      required
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="teamCodeInput">Mã đội</label>
+                    <input
+                      id="teamCodeInput"
+                      type="text"
+                      maxlength="24"
+                      placeholder="Ví dụ: 11A1-GREEN"
+                      required
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="teamDescriptionInput">Mô tả ngắn</label>
+                    <textarea
+                      id="teamDescriptionInput"
+                      rows="4"
+                      placeholder="Nhóm này thi đua theo mục tiêu gì?"
+                    ></textarea>
+                  </div>
+                  <div class="team-form-actions">
+                    <button class="action-btn" type="submit">
+                      Tạo đội và tham gia
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div id="joinTeamPanel" class="hidden">
+                <h4>Tham gia bằng mã đội</h4>
+                <p>
+                  Nhập đúng mã để gắn tài khoản của bạn vào bảng điểm đội hiện
+                  có.
+                </p>
+                <form id="joinTeamForm" class="team-form">
+                  <div class="field">
+                    <label for="joinTeamCodeInput">Mã đội</label>
+                    <input
+                      id="joinTeamCodeInput"
+                      type="text"
+                      maxlength="24"
+                      placeholder="Nhập mã đội được chia sẻ"
+                      required
+                    />
+                  </div>
+                  <div class="team-form-actions">
+                    <button class="action-btn" type="submit">
+                      Tham gia đội
+                    </button>
+                  </div>
+                </form>
+                <div class="helper-copy">
+                  Nếu bạn đã là thành viên, hệ thống sẽ báo trạng thái thay vì
+                  tạo trùng.
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div id="teamModalFeedback" class="data-error hidden"></div>
+        </div>
+      </div>
+    </div>
 
     <script>
       const SUPABASE_URL = "https://pnyjxbrkiifrsrtmnxro.supabase.co";
@@ -915,8 +2090,161 @@
 
       const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       const userLabel = document.getElementById("userLabel");
-      const signOutBtn = document.getElementById("signOutBtn");
       const toggle = document.getElementById("darkToggle");
+      const combatError = document.getElementById("combatError");
+      const submissionFeedback = document.getElementById("submissionFeedback");
+      const usersLeaderboard = document.getElementById("usersLeaderboard");
+      const teamsLeaderboard = document.getElementById("teamsLeaderboard");
+      const missionList = document.getElementById("missionList");
+      const historyList = document.getElementById("historyList");
+      const badgeList = document.getElementById("badgeList");
+      const teamList = document.getElementById("teamList");
+      const missionSelect = document.getElementById("missionSelect");
+      const teamSelect = document.getElementById("teamSelect");
+      const plantSelect = document.getElementById("plantSelect");
+      const quantityInput = document.getElementById("quantityInput");
+      const proofUrlInput = document.getElementById("proofUrlInput");
+      const noteInput = document.getElementById("noteInput");
+      const submissionForm = document.getElementById("submissionForm");
+      const refreshCombatBtn = document.getElementById("refreshCombatBtn");
+      const jumpToSubmissionBtn = document.getElementById(
+        "jumpToSubmissionBtn",
+      );
+      const joinTeamBtn = document.getElementById("joinTeamBtn");
+      const prefillPlantCareBtn = document.getElementById(
+        "prefillPlantCareBtn",
+      );
+      const teamModalOverlay = document.getElementById("teamModalOverlay");
+      const closeTeamModalBtn = document.getElementById("closeTeamModalBtn");
+      const teamModalFeedback = document.getElementById("teamModalFeedback");
+      const createTeamPanel = document.getElementById("createTeamPanel");
+      const joinTeamPanel = document.getElementById("joinTeamPanel");
+      const createTeamForm = document.getElementById("createTeamForm");
+      const joinTeamForm = document.getElementById("joinTeamForm");
+      const teamNameInput = document.getElementById("teamNameInput");
+      const teamCodeInput = document.getElementById("teamCodeInput");
+      const teamDescriptionInput = document.getElementById(
+        "teamDescriptionInput",
+      );
+      const joinTeamCodeInput = document.getElementById("joinTeamCodeInput");
+
+      const state = {
+        session: null,
+        profile: null,
+        teams: [],
+        missions: [],
+        plants: [],
+        recentSubmissions: [],
+        userBoard: [],
+        teamBoard: [],
+        badges: [],
+      };
+
+      const fallbackData = {
+        missions: [
+          {
+            id: "mission-plant-tree",
+            title: "Plant a Tree",
+            description:
+              "Tạo hồ sơ cây mới với minh chứng trồng và người chịu trách nhiệm.",
+            action_type: "plant_tree",
+            points_reward: 30,
+            verification_type: "manual",
+            mode: "both",
+            is_active: true,
+          },
+          {
+            id: "mission-plant-care",
+            title: "Care for Your Tree",
+            description:
+              "Gửi nhật ký theo dõi cây để chứng minh việc chăm sóc lâu dài.",
+            action_type: "plant_care",
+            points_reward: 15,
+            verification_type: "manual",
+            mode: "both",
+            is_active: true,
+          },
+          {
+            id: "mission-cleanup",
+            title: "Cleanup Submission",
+            description:
+              "Nộp bằng chứng nhặt rác hoặc dọn dẹp có thể kiểm tra lại.",
+            action_type: "cleanup_submission",
+            points_reward: 20,
+            verification_type: "manual",
+            mode: "both",
+            is_active: true,
+          },
+        ],
+        users: [
+          {
+            user_id: "1",
+            username: "EcoLan",
+            total_points: 180,
+            approved_submissions: 9,
+          },
+          {
+            user_id: "2",
+            username: "TreeMinh",
+            total_points: 150,
+            approved_submissions: 7,
+          },
+          {
+            user_id: "3",
+            username: "CleanUpHoa",
+            total_points: 120,
+            approved_submissions: 6,
+          },
+        ],
+        teams: [
+          { team_id: "t1", name: "11A1", total_points: 420, member_count: 18 },
+          {
+            team_id: "t2",
+            name: "Green Squad",
+            total_points: 360,
+            member_count: 11,
+          },
+          {
+            team_id: "t3",
+            name: "Leaf Makers",
+            total_points: 245,
+            member_count: 8,
+          },
+        ],
+        badges: [
+          {
+            badge_key: "first_action",
+            name: "First Action",
+            description: "Duyệt thành công bài gửi đầu tiên.",
+          },
+          {
+            badge_key: "tree_guardian",
+            name: "Tree Guardian",
+            description: "Theo dõi cây đều đặn qua nhiều lần cập nhật.",
+          },
+        ],
+        submissions: [
+          {
+            id: "s1",
+            status: "approved",
+            note: "Cập nhật tưới cây tuần 2 tại sân sau lớp.",
+            quantity: 1,
+            created_at: new Date().toISOString(),
+            combat_missions: { title: "Care for Your Tree", points_reward: 15 },
+            review_note: "Minh chứng rõ, đúng chu kỳ.",
+          },
+          {
+            id: "s2",
+            status: "pending",
+            note: "Nhặt 2 bao rác quanh sân thể thao.",
+            quantity: 2,
+            created_at: new Date().toISOString(),
+            combat_missions: { title: "Cleanup Submission", points_reward: 20 },
+            review_note: null,
+          },
+        ],
+      };
+
       toggle.onclick = () => {
         document.body.classList.toggle("dark");
 
@@ -991,23 +2319,684 @@
         document.body.classList.add("dark");
       }
 
+      function setError(message) {
+        if (!message) {
+          combatError.textContent = "";
+          combatError.classList.add("hidden");
+          return;
+        }
+        combatError.textContent = message;
+        combatError.classList.remove("hidden");
+      }
+
+      function setSubmissionFeedback(message, isError = false) {
+        if (!message) {
+          submissionFeedback.textContent = "";
+          submissionFeedback.classList.add("hidden");
+          submissionFeedback.style.background = "";
+          submissionFeedback.style.borderColor = "";
+          submissionFeedback.style.color = "";
+          return;
+        }
+        submissionFeedback.textContent = message;
+        submissionFeedback.classList.remove("hidden");
+        if (!isError) {
+          submissionFeedback.style.background = "#e9f7e7";
+          submissionFeedback.style.borderColor = "#cae5c5";
+          submissionFeedback.style.color = "#245b36";
+        } else {
+          submissionFeedback.style.background = "";
+          submissionFeedback.style.borderColor = "";
+          submissionFeedback.style.color = "";
+        }
+      }
+
+      function setTeamModalFeedback(message, isError = false) {
+        if (!message) {
+          teamModalFeedback.textContent = "";
+          teamModalFeedback.classList.add("hidden");
+          teamModalFeedback.style.background = "";
+          teamModalFeedback.style.borderColor = "";
+          teamModalFeedback.style.color = "";
+          return;
+        }
+
+        teamModalFeedback.textContent = message;
+        teamModalFeedback.classList.remove("hidden");
+        if (!isError) {
+          teamModalFeedback.style.background = "#e9f7e7";
+          teamModalFeedback.style.borderColor = "#cae5c5";
+          teamModalFeedback.style.color = "#245b36";
+        } else {
+          teamModalFeedback.style.background = "";
+          teamModalFeedback.style.borderColor = "";
+          teamModalFeedback.style.color = "";
+        }
+      }
+
+      function formatDate(dateValue) {
+        if (!dateValue) return "No date";
+        return new Date(dateValue).toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function renderLeaderboard(list, container, type) {
+        if (!list.length) {
+          container.innerHTML =
+            '<div class="empty-state">Chưa có dữ liệu xếp hạng.</div>';
+          return;
+        }
+
+        container.innerHTML = list
+          .map((entry, index) => {
+            const name =
+              type === "users"
+                ? entry.username || "Người dùng ẩn danh"
+                : entry.name || "Đội chưa đặt tên";
+            const meta =
+              type === "users"
+                ? `${entry.approved_submissions || 0} bài được duyệt`
+                : `${entry.member_count || 0} thành viên`;
+            return `
+              <article class="rank-card">
+                <div class="rank-number">#${index + 1}</div>
+                <div class="rank-main">
+                  <div class="rank-name">${escapeHtml(name)}</div>
+                  <div class="history-meta">${escapeHtml(meta)}</div>
+                </div>
+                <div class="rank-score">${Number(entry.total_points || 0).toLocaleString("vi-VN")} điểm</div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderMissions(missions) {
+        if (!missions.length) {
+          missionList.innerHTML =
+            '<div class="empty-state">Chưa có mission active.</div>';
+          return;
+        }
+
+        missionList.innerHTML = missions
+          .map(
+            (mission) => `
+              <article class="mission-card">
+                <div class="pill-row">
+                  <span class="pill">${escapeHtml(mission.action_type)}</span>
+                  <span class="chip">${Number(mission.points_reward || 0)} điểm</span>
+                  <span class="chip">${escapeHtml(mission.mode || "both")}</span>
+                </div>
+                <h4>${escapeHtml(mission.title)}</h4>
+                <p>${escapeHtml(mission.description || "Nhiệm vụ chưa có mô tả.")}</p>
+                <div class="mission-footer">
+                  <span class="history-meta">Xác minh: ${escapeHtml(mission.verification_type || "manual")}</span>
+                  <button class="secondary-btn mission-submit-btn" type="button" data-mission-id="${escapeHtml(mission.id)}">Nộp cho nhiệm vụ này</button>
+                </div>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function renderHistory(submissions) {
+        if (!submissions.length) {
+          historyList.innerHTML =
+            '<div class="empty-state">Bạn chưa có bài gửi nào trong Green Combat.</div>';
+          return;
+        }
+
+        historyList.innerHTML = submissions
+          .map((item) => {
+            const missionTitle = item.combat_missions?.title || "Mission";
+            const points = item.combat_missions?.points_reward || 0;
+            return `
+              <article class="history-item">
+                <div class="meta-row">
+                  <span class="status-pill ${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>
+                  <span class="chip">${escapeHtml(missionTitle)}</span>
+                  <span class="chip">${Number(points).toLocaleString("vi-VN")} điểm</span>
+                </div>
+                <p>${escapeHtml(item.note || "Không có ghi chú.")}</p>
+                <div class="history-footer">
+                  <span class="history-meta">${formatDate(item.created_at)}</span>
+                  <span class="history-meta">${escapeHtml(item.review_note || "Đang chờ duyệt")}</span>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderBadges(badges) {
+        if (!badges.length) {
+          badgeList.innerHTML =
+            '<div class="empty-state">Chưa có huy hiệu nào được gắn cho tài khoản này.</div>';
+          return;
+        }
+
+        badgeList.innerHTML = badges
+          .map(
+            (badge) => `
+              <article class="badge-item">
+                <div class="pill-row">
+                  <span class="pill">${escapeHtml(badge.badge_key || "badge")}</span>
+                </div>
+                <h4>${escapeHtml(badge.name || "Unnamed badge")}</h4>
+                <p>${escapeHtml(badge.description || "Không có mô tả")}</p>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function renderTeams(teams) {
+        if (!teams.length) {
+          teamList.innerHTML =
+            '<div class="empty-state">Bạn chưa tham gia đội nào. Team mode sẽ được mở khi có nhóm hoặc lớp.</div>';
+          return;
+        }
+
+        teamList.innerHTML = teams
+          .map(
+            (team) => `
+              <article class="team-card">
+                <div class="pill-row">
+                  <span class="pill">${escapeHtml(team.role || "member")}</span>
+                  <span class="chip">${escapeHtml(team.code || "No code")}</span>
+                </div>
+                <h4>${escapeHtml(team.name || "Team")}</h4>
+                <p>${escapeHtml(team.description || "Đội thi đua cho các hành động xanh có xác minh.")}</p>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function populateMissionOptions(missions) {
+        missionSelect.innerHTML = missions.length
+          ? missions
+              .map(
+                (mission) =>
+                  `<option value="${escapeHtml(mission.id)}">${escapeHtml(mission.title)} - ${Number(mission.points_reward || 0).toLocaleString("vi-VN")} điểm</option>`,
+              )
+              .join("")
+          : '<option value="">Chưa có mission</option>';
+      }
+
+      function populateTeamOptions(teams) {
+        teamSelect.innerHTML = '<option value="">Không gắn đội</option>';
+        teams.forEach((team) => {
+          const option = document.createElement("option");
+          option.value = team.id || team.team_id || "";
+          option.textContent = team.name || "Unnamed team";
+          teamSelect.appendChild(option);
+        });
+      }
+
+      function populatePlantOptions(plants) {
+        plantSelect.innerHTML = '<option value="">Không liên kết cây</option>';
+        plants.forEach((plant) => {
+          const option = document.createElement("option");
+          option.value = plant.id;
+          option.textContent = plant.plant_name || `Plant ${plant.id}`;
+          plantSelect.appendChild(option);
+        });
+      }
+
+      function setTeamModalTab(mode) {
+        const isCreate = mode === "create";
+        createTeamPanel.classList.toggle("hidden", !isCreate);
+        joinTeamPanel.classList.toggle("hidden", isCreate);
+        document.querySelectorAll(".team-modal-tab").forEach((button) => {
+          button.classList.toggle("active", button.dataset.teamTab === mode);
+        });
+        setTeamModalFeedback("");
+      }
+
+      function openTeamModal(mode = "create") {
+        setTeamModalTab(mode);
+        teamModalOverlay.hidden = false;
+        document.body.classList.add("menu-open");
+        (mode === "create" ? teamNameInput : joinTeamCodeInput)?.focus();
+      }
+
+      function closeTeamModal() {
+        teamModalOverlay.hidden = true;
+        document.body.classList.remove("menu-open");
+        setTeamModalFeedback("");
+      }
+
+      async function createTeamAndMembership(event) {
+        event.preventDefault();
+        setTeamModalFeedback("");
+
+        if (!state.session?.user?.id) {
+          setTeamModalFeedback("Bạn cần đăng nhập trước khi tạo đội.", true);
+          return;
+        }
+
+        const name = teamNameInput.value.trim();
+        const code = teamCodeInput.value
+          .trim()
+          .toUpperCase()
+          .replace(/\s+/g, "-");
+        const description = teamDescriptionInput.value.trim() || null;
+
+        if (!name || !code) {
+          setTeamModalFeedback("Tên đội và mã đội là bắt buộc.", true);
+          return;
+        }
+
+        const { data: createdTeam, error: createError } = await _supabase
+          .from("teams")
+          .insert({
+            name,
+            code,
+            description,
+            created_by: state.session.user.id,
+          })
+          .select("id, name, code")
+          .single();
+
+        if (createError || !createdTeam) {
+          setTeamModalFeedback(
+            `Không thể tạo đội: ${createError?.message || "unknown error"}`,
+            true,
+          );
+          return;
+        }
+
+        const { error: joinError } = await _supabase
+          .from("team_members")
+          .insert({
+            team_id: createdTeam.id,
+            user_id: state.session.user.id,
+            role: "owner",
+          });
+
+        if (joinError) {
+          setTeamModalFeedback(
+            `Đội đã tạo nhưng chưa thêm được bạn vào đội: ${joinError.message}`,
+            true,
+          );
+          return;
+        }
+
+        createTeamForm.reset();
+        setTeamModalFeedback(
+          `Đã tạo đội ${createdTeam.name} với mã ${createdTeam.code}.`,
+        );
+        await loadCombatData(state.session.user.id);
+      }
+
+      async function joinExistingTeam(event) {
+        event.preventDefault();
+        setTeamModalFeedback("");
+
+        if (!state.session?.user?.id) {
+          setTeamModalFeedback(
+            "Bạn cần đăng nhập trước khi tham gia đội.",
+            true,
+          );
+          return;
+        }
+
+        const code = joinTeamCodeInput.value.trim().toUpperCase();
+        if (!code) {
+          setTeamModalFeedback("Vui lòng nhập mã đội.", true);
+          return;
+        }
+
+        const { data: team, error: teamError } = await _supabase
+          .from("teams")
+          .select("id, name, code")
+          .eq("code", code)
+          .maybeSingle();
+
+        if (teamError || !team) {
+          setTeamModalFeedback("Không tìm thấy đội với mã này.", true);
+          return;
+        }
+
+        const { error: membershipError } = await _supabase
+          .from("team_members")
+          .insert({
+            team_id: team.id,
+            user_id: state.session.user.id,
+            role: "member",
+          });
+
+        if (membershipError) {
+          const duplicate =
+            membershipError.message?.toLowerCase().includes("duplicate") ||
+            membershipError.message?.toLowerCase().includes("unique");
+          setTeamModalFeedback(
+            duplicate
+              ? `Bạn đã ở trong đội ${team.name}.`
+              : `Không thể tham gia đội: ${membershipError.message}`,
+            !duplicate,
+          );
+          if (!duplicate) return;
+        }
+
+        joinTeamForm.reset();
+        setTeamModalFeedback(`Đã tham gia đội ${team.name}.`);
+        await loadCombatData(state.session.user.id);
+      }
+
+      function updateHeroStats() {
+        const totalPoints =
+          state.userBoard.find((entry) => entry.user_id === state.profile?.id)
+            ?.total_points || 0;
+        const sortedUsers = [...state.userBoard].sort(
+          (a, b) => (b.total_points || 0) - (a.total_points || 0),
+        );
+        const userRank =
+          sortedUsers.findIndex(
+            (entry) => entry.user_id === state.profile?.id,
+          ) + 1;
+        const approvedCount = state.recentSubmissions.filter(
+          (item) => item.status === "approved",
+        ).length;
+
+        document.getElementById("heroRankValue").textContent =
+          userRank > 0 ? `#${userRank}` : "#--";
+        document.getElementById("heroPointsValue").textContent =
+          Number(totalPoints).toLocaleString("vi-VN");
+        document.getElementById("heroStreakValue").textContent =
+          `${state.profile?.streak || 0} ngày`;
+        document.getElementById("teamSummaryValue").textContent =
+          state.teams[0]?.name || "Chưa tham gia";
+        document.getElementById("approvedCountValue").textContent =
+          String(approvedCount);
+        document.getElementById("participantsValue").textContent = String(
+          state.userBoard.length,
+        );
+        document.getElementById("teamsValue").textContent = String(
+          state.teamBoard.length || state.teams.length,
+        );
+        document.getElementById("approvedActionsValue").textContent = String(
+          state.recentSubmissions.filter((item) => item.status === "approved")
+            .length,
+        );
+        document.getElementById("globalPointsValue").textContent = Number(
+          state.userBoard.reduce(
+            (sum, entry) => sum + Number(entry.total_points || 0),
+            0,
+          ),
+        ).toLocaleString("vi-VN");
+      }
+
+      function renderAll() {
+        renderLeaderboard(state.userBoard, usersLeaderboard, "users");
+        renderLeaderboard(state.teamBoard, teamsLeaderboard, "teams");
+        renderMissions(state.missions);
+        renderHistory(state.recentSubmissions);
+        renderBadges(state.badges);
+        renderTeams(state.teams);
+        populateMissionOptions(state.missions);
+        populateTeamOptions(state.teams);
+        populatePlantOptions(state.plants);
+        updateHeroStats();
+      }
+
+      async function loadCombatData(userId) {
+        setError("");
+
+        const [
+          profileRes,
+          teamsRes,
+          missionsRes,
+          plantsRes,
+          submissionsRes,
+          userBoardRes,
+          teamBoardRes,
+          badgesRes,
+        ] = await Promise.all([
+          _supabase
+            .from("profiles")
+            .select("id, username, avatar_url, coin, streak")
+            .eq("id", userId)
+            .maybeSingle(),
+          _supabase
+            .from("team_members")
+            .select("role, teams(id, name, code, description)")
+            .eq("user_id", userId),
+          _supabase
+            .from("combat_missions")
+            .select(
+              "id, title, description, action_type, points_reward, verification_type, mode, is_active",
+            )
+            .eq("is_active", true)
+            .order("created_at", { ascending: false }),
+          _supabase
+            .from("plants")
+            .select("id, plant_name")
+            .eq("owner_id", userId)
+            .order("created_at", { ascending: false }),
+          _supabase
+            .from("combat_submissions")
+            .select(
+              "id, status, note, quantity, created_at, review_note, combat_missions(title, points_reward)",
+            )
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false })
+            .limit(6),
+          _supabase
+            .from("leaderboard_users")
+            .select("user_id, username, total_points, approved_submissions")
+            .order("total_points", { ascending: false })
+            .limit(8),
+          _supabase
+            .from("leaderboard_teams")
+            .select("team_id, name, total_points, member_count")
+            .order("total_points", { ascending: false })
+            .limit(8),
+          _supabase
+            .from("user_badges")
+            .select("badges(badge_key, name, description)")
+            .eq("user_id", userId),
+        ]);
+
+        state.profile = profileRes.data || { id: userId, streak: 0 };
+        state.teams = (teamsRes.data || [])
+          .map((row) => ({ ...row.teams, role: row.role }))
+          .filter(Boolean);
+        state.missions = missionsRes.data?.length
+          ? missionsRes.data
+          : fallbackData.missions;
+        state.plants = plantsRes.data || [];
+        state.recentSubmissions = submissionsRes.data || [];
+        state.userBoard = userBoardRes.data || [];
+        state.teamBoard = teamBoardRes.data || [];
+        state.badges = (badgesRes.data || [])
+          .map((row) => row.badges)
+          .filter(Boolean);
+        if (!state.badges.length) state.badges = fallbackData.badges;
+
+        const potentialErrors = [
+          profileRes.error,
+          teamsRes.error,
+          missionsRes.error,
+          plantsRes.error,
+          submissionsRes.error,
+          userBoardRes.error,
+          teamBoardRes.error,
+          badgesRes.error,
+        ].filter(Boolean);
+
+        if (potentialErrors.length) {
+          setError(
+            "Một phần dữ liệu Green Combat chưa sẵn sàng trong Supabase, nên trang đang dùng dữ liệu fallback để bạn tiếp tục dựng tính năng.",
+          );
+          console.warn("Green Combat data warnings:", potentialErrors);
+        }
+
+        renderAll();
+      }
+
+      async function handleSubmission(event) {
+        event.preventDefault();
+        setSubmissionFeedback("");
+
+        const missionId = missionSelect.value;
+        const teamId = teamSelect.value || null;
+        const plantId = plantSelect.value || null;
+        const quantity = quantityInput.value
+          ? Number(quantityInput.value)
+          : null;
+        const proofUrl = proofUrlInput.value.trim() || null;
+        const note = noteInput.value.trim();
+
+        if (!state.session?.user?.id) {
+          setSubmissionFeedback("Bạn cần đăng nhập để gửi hành động.", true);
+          return;
+        }
+
+        const mission = state.missions.find((item) => item.id === missionId);
+        if (!mission) {
+          setSubmissionFeedback("Vui lòng chọn nhiệm vụ hợp lệ.", true);
+          return;
+        }
+
+        const payload = {
+          mission_id: missionId,
+          user_id: state.session.user.id,
+          team_id: teamId,
+          plant_id: plantId,
+          submission_type: mission.action_type || "custom",
+          proof_image_url: proofUrl,
+          note,
+          quantity,
+          status: "pending",
+        };
+
+        const { error } = await _supabase
+          .from("combat_submissions")
+          .insert(payload);
+        if (error) {
+          setSubmissionFeedback(
+            `Không thể tạo submission: ${error.message}`,
+            true,
+          );
+          return;
+        }
+
+        submissionForm.reset();
+        populateTeamOptions(state.teams);
+        populatePlantOptions(state.plants);
+        populateMissionOptions(state.missions);
+        setSubmissionFeedback(
+          "Đã tạo submission ở trạng thái pending. Bạn có thể dùng luồng admin để duyệt và cộng điểm.",
+        );
+        await loadCombatData(state.session.user.id);
+      }
+
+      function bindStaticEvents() {
+        document.querySelectorAll(".tab-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((btn) => btn.classList.remove("active"));
+            button.classList.add("active");
+            const showTeams = button.dataset.tab === "teams";
+            usersLeaderboard.classList.toggle("hidden", showTeams);
+            teamsLeaderboard.classList.toggle("hidden", !showTeams);
+          });
+        });
+
+        missionList.addEventListener("click", (event) => {
+          const button = event.target.closest(".mission-submit-btn");
+          if (!button) return;
+          missionSelect.value = button.dataset.missionId || "";
+          document
+            .getElementById("submissionSection")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        refreshCombatBtn.addEventListener("click", async () => {
+          if (state.session?.user?.id) {
+            await loadCombatData(state.session.user.id);
+          }
+        });
+
+        jumpToSubmissionBtn.addEventListener("click", () => {
+          document
+            .getElementById("submissionSection")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        joinTeamBtn.addEventListener("click", () => {
+          openTeamModal("create");
+        });
+
+        prefillPlantCareBtn.addEventListener("click", () => {
+          const plantCareMission = state.missions.find(
+            (mission) => mission.action_type === "plant_care",
+          );
+          if (plantCareMission) missionSelect.value = plantCareMission.id;
+          noteInput.value =
+            "Tưới cây, kiểm tra đất và ghi nhận tình trạng lá hôm nay.";
+          quantityInput.value = "1";
+        });
+
+        submissionForm.addEventListener("submit", handleSubmission);
+        createTeamForm.addEventListener("submit", createTeamAndMembership);
+        joinTeamForm.addEventListener("submit", joinExistingTeam);
+
+        document.querySelectorAll(".team-modal-tab").forEach((button) => {
+          button.addEventListener("click", () => {
+            setTeamModalTab(button.dataset.teamTab || "create");
+          });
+        });
+
+        closeTeamModalBtn.addEventListener("click", closeTeamModal);
+        teamModalOverlay.addEventListener("click", (event) => {
+          if (event.target === teamModalOverlay) closeTeamModal();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !teamModalOverlay.hidden) {
+            closeTeamModal();
+          }
+        });
+      }
+
       initMobileSidebarToggle();
+      bindStaticEvents();
 
       _supabase.auth.onAuthStateChange((event, session) => {
         if (session) {
+          state.session = session;
           userLabel.textContent = session.user.email;
+          loadCombatData(session.user.id).catch((error) => {
+            console.error("Failed to load Green Combat data:", error);
+            setError(
+              "Không thể tải Green Combat lúc này. Kiểm tra schema, views hoặc RLS trong Supabase.",
+            );
+            state.profile = { id: session.user.id, streak: 0 };
+            state.missions = fallbackData.missions;
+            state.userBoard = [];
+            state.teamBoard = [];
+            state.recentSubmissions = [];
+            state.badges = fallbackData.badges;
+            renderAll();
+          });
         } else {
           window.location.href = "login.html";
-        }
-      });
-
-      signOutBtn.addEventListener("click", async (event) => {
-        event.preventDefault();
-        const { error } = await _supabase.auth.signOut();
-        if (!error) {
-          window.location.href = "login.html";
-        } else {
-          console.error("Logout failed:", error.message);
         }
       });
     </script>

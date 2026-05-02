@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Combat Review</title>
+    <link rel="icon" type="image/x-icon" href="resources/Favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,0,0"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      :root {
+        --bg: #eef4ea;
+        --panel: #fff;
+        --line: #d8e2d2;
+        --text: #203025;
+        --muted: #607064;
+        --accent: #2f7a45;
+        --warn: #9b6a08;
+        --danger: #9f3333;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Georgia, serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 100vh;
+      }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        background: #f5f7f3;
+        border-right: 1px solid var(--line);
+        padding: 24px 18px;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+      .brand img {
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+      }
+      .nav a {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 12px;
+        margin-bottom: 6px;
+      }
+      .nav a.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .main {
+        min-width: 0;
+        padding: 28px;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: var(--bg);
+        padding-bottom: 18px;
+      }
+
+      .topbar,
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+      }
+      .panel,
+      .submission {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(34, 53, 31, 0.06);
+      }
+      .list {
+        display: grid;
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .pill {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+      .pending {
+        background: #fff3d8;
+        color: var(--warn);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      textarea {
+        width: 100%;
+        min-height: 90px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        font: inherit;
+        margin-top: 12px;
+      }
+      button {
+        border: none;
+        border-radius: 12px;
+        padding: 11px 14px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .action {
+        background: var(--accent);
+        color: #fff;
+      }
+      .ghost {
+        background: #edf3eb;
+        color: var(--text);
+      }
+      .danger-btn {
+        background: #fde7e7;
+        color: var(--danger);
+      }
+      .message {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #f7faf5;
+      }
+      .hidden {
+        display: none;
+      }
+      .proof {
+        color: var(--accent);
+      }
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
+          border-right: none;
+          border-bottom: 1px solid var(--line);
+        }
+        .topbar {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="resources/logo_type_shit.png" alt="Green Truth logo" />
+          <span>Green Truth</span>
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html"
+            ><span class="material-symbols-outlined">dashboard</span>Bảng Điều
+            Khiển</a
+          >
+          <a href="GreenCombat.html"
+            ><span class="material-symbols-outlined">sports_esports</span>So Tài
+            Xanh</a
+          >
+          <a href="GreenCombatAdmin.html"
+            ><span class="material-symbols-outlined">admin_panel_settings</span
+            >Combat Admin</a
+          >
+          <a class="active" href="GreenCombatReview.html"
+            ><span class="material-symbols-outlined">fact_check</span>Duyệt
+            Submission</a
+          >
+          <a href="login.html"
+            ><span class="material-symbols-outlined">logout</span>Đăng Xuất</a
+          >
+        </nav>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <div>
+            <div class="muted">Reviewer workspace</div>
+            <h1>Duyệt Green Combat submissions</h1>
+          </div>
+          <button id="refreshBtn" class="ghost" type="button">Làm mới</button>
+        </div>
+        <section class="panel">
+          <p class="muted">
+            Trang này dành cho owner hoặc user có trong `combat_admins`. Khi
+            duyệt `approved`, RPC sẽ tạo đúng một `point_transactions`. Tạo
+            submission mới sẽ không cộng điểm.
+          </p>
+          <div id="reviewMessage" class="message hidden"></div>
+        </section>
+        <section id="submissionList" class="list"></section>
+      </main>
+    </div>
+    <script>
+      const SUPABASE_URL = "https://pnyjxbrkiifrsrtmnxro.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueWp4YnJraWlmcnNydG1ueHJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MDgxOTAsImV4cCI6MjA4ODE4NDE5MH0.uCYdN3SaANJZc5XqT1AdcbjlrFHCY7xaS2ff_y4z84c";
+      const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { detectSessionInUrl: false, autoRefreshToken: false },
+      });
+
+      const submissionList = document.getElementById("submissionList");
+      const reviewMessage = document.getElementById("reviewMessage");
+      const refreshBtn = document.getElementById("refreshBtn");
+      let session = null;
+      let loading = false;
+
+      function setMessage(text, isError = false) {
+        reviewMessage.textContent = text || "";
+        reviewMessage.classList.toggle("hidden", !text);
+        reviewMessage.style.background = isError ? "#fff1f1" : "#f7faf5";
+        reviewMessage.style.borderColor = isError ? "#efc1c1" : "";
+        reviewMessage.style.color = isError ? "#8d2f2f" : "";
+      }
+
+      function renderSubmissions(rows) {
+        if (!rows.length) {
+          submissionList.innerHTML =
+            '<section class="submission"><strong>Không có submission pending nào.</strong></section>';
+          return;
+        }
+
+        submissionList.innerHTML = rows
+          .map(
+            (row) => `
+          <article class="submission" data-id="${row.id}">
+            <div class="topbar">
+              <div>
+                <span class="pill pending">${row.status}</span>
+                <h3>${row.combat_missions?.title || "Mission"}</h3>
+              </div>
+              <div class="muted">${new Date(row.created_at).toLocaleString("vi-VN")}</div>
+            </div>
+            <p><strong>User:</strong> ${row.profiles?.username || row.user_id}</p>
+            <p><strong>Note:</strong> ${row.note || "Không có ghi chú."}</p>
+            <p><strong>Quantity:</strong> ${row.quantity ?? "-"}</p>
+            <p><strong>Proof:</strong> ${row.proof_image_url ? `<a class="proof" href="${row.proof_image_url}" target="_blank" rel="noopener noreferrer">Mở minh chứng</a>` : "Không có URL"}</p>
+            <textarea placeholder="Ghi chú reviewer"></textarea>
+            <div class="actions" style="margin-top:12px; justify-content:flex-end;">
+              <button class="danger-btn" type="button" data-action="rejected">Từ chối</button>
+              <button class="action" type="button" data-action="approved">Phê duyệt</button>
+            </div>
+          </article>
+        `,
+          )
+          .join("");
+      }
+
+      async function loadPendingSubmissions() {
+        if (loading) return;
+        loading = true;
+        const { data, error } = await client
+          .from("combat_submissions")
+          .select(
+            "id, user_id, note, quantity, proof_image_url, status, created_at, combat_missions(title), profiles:user_id(username)",
+          )
+          .eq("status", "pending")
+          .order("created_at", { ascending: false })
+          .limit(25);
+
+        loading = false;
+        if (error) {
+          setMessage(`Không thể tải submissions: ${error.message}`, true);
+          renderSubmissions([]);
+          return;
+        }
+
+        setMessage("Đã tải danh sách pending submissions.");
+        renderSubmissions(data || []);
+      }
+
+      submissionList.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-action]");
+        if (!button || !session) return;
+        const submission = button.closest("[data-id]");
+        const reviewNote =
+          submission.querySelector("textarea").value.trim() || null;
+        const status = button.dataset.action;
+
+        const rpcName =
+          status === "approved"
+            ? "approve_combat_submission"
+            : "reject_combat_submission";
+        const { error } = await client.rpc(rpcName, {
+          target_submission_id: submission.dataset.id,
+          reviewer_note: reviewNote,
+        });
+
+        if (error) {
+          setMessage(`Không thể cập nhật submission: ${error.message}`, true);
+          return;
+        }
+
+        setMessage(
+          status === "approved"
+            ? "Đã phê duyệt submission."
+            : "Đã từ chối submission.",
+        );
+        await loadPendingSubmissions();
+      });
+
+      refreshBtn.addEventListener("click", () => {
+        if (session) loadPendingSubmissions();
+      });
+
+      function syncSession(nextSession) {
+        session = nextSession;
+        if (!session) {
+          window.location.href = "login.html";
+          return false;
+        }
+        return true;
+      }
+
+      client.auth.onAuthStateChange((_event, nextSession) => {
+        if (syncSession(nextSession)) {
+          loadPendingSubmissions();
+        }
+      });
+
+      async function bootstrap() {
+        try {
+          const {
+            data: { session: currentSession },
+            error,
+          } = await client.auth.getSession();
+          if (error) throw error;
+          if (syncSession(currentSession)) {
+            await loadPendingSubmissions();
+          }
+        } catch (error) {
+          setMessage(
+            `Không thể khởi tạo phiên đăng nhập: ${error.message}`,
+            true,
+          );
+        }
+      }
+
+      bootstrap();
+    </script>
+  </body>
+</html>

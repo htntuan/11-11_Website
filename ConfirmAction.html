@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <link rel="icon" type="image/x-icon" href="resources/Favicon.png" />
@@ -44,15 +44,24 @@
         border-radius: 14px;
         display: grid;
         grid-template-columns: 240px 1fr;
-        overflow: hidden;
       }
 
       .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: #f0f1ef;
         border-right: 1px solid #dde4d5;
         padding: 18px 14px;
         display: flex;
         flex-direction: column;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .sidebar:hover,
+      .sidebar:focus-within {
+        overflow-y: auto;
       }
 
       .brand {
@@ -63,6 +72,14 @@
         font-size: 1.2rem;
         padding: 8px 10px;
         margin-bottom: 16px;
+      }
+
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        object-fit: cover;
+        flex-shrink: 0;
       }
 
       .brand-badge {
@@ -106,7 +123,11 @@
       }
 
       .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
         height: 64px;
+        background: #f6f7f4;
         border-bottom: 1px solid var(--line);
         padding: 0 20px;
         display: grid;
@@ -191,6 +212,7 @@
       }
 
       body.dark .topbar {
+        background: #1e1e1e;
         border-bottom-color: #3a3a3a;
       }
 
@@ -303,6 +325,11 @@
         grid-auto-rows: minmax(140px, auto);
         gap: 14px;
         align-content: start;
+        background:
+          linear-gradient(rgba(246, 247, 244, 0), rgba(246, 247, 244, 0)),
+          url("resources/SolutionSectionBackground.png");
+        background-size: cover;
+        background-position: center;
       }
 
       .panel {
@@ -574,6 +601,9 @@
         }
 
         .sidebar {
+          position: static;
+          height: auto;
+          overflow-y: visible;
           border-right: none;
           border-bottom: 1px solid var(--line);
           padding: 12px;
@@ -886,7 +916,8 @@
         }
 
         .sidebar {
-          position: static;
+          position: sticky;
+          top: 0;
           transform: none !important;
           width: auto;
           max-width: none;
@@ -904,7 +935,11 @@
     <div class="shell">
       <aside class="sidebar" id="appSidebar">
         <div class="brand">
-          <span class="brand-badge">&#10059;</span>
+          <img
+            class="brand-logo"
+            src="resources/logo_type_shit.png"
+            alt="Green Truth logo"
+          />
           <span>Green Truth</span>
         </div>
 
@@ -930,6 +965,9 @@
           <a href="GreenCombat.html"
             ><span class="material-symbols-outlined">sports_esports</span>So Tài
             Xanh</a
+          >
+          <a href="Chatbot.html"
+            ><span class="material-symbols-outlined">smart_toy</span>Chatbot</a
           >
           <a class="active" href="ConfirmAction.html"
             ><span class="material-symbols-outlined">check_box</span>Xác Nhận
