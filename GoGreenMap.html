@@ -123,7 +123,7 @@
 
       .main {
         display: grid;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto 1fr auto;
         min-width: 0;
         min-height: 0;
       }
@@ -143,11 +143,17 @@
       }
 
       .map-toolbar {
-        grid-column: 1 / -1;
+        position: sticky;
+        bottom: 0;
+        z-index: 80;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 10px;
-        margin-top: 8px;
+        padding: 12px 16px;
+        background: rgba(246, 247, 244, 0.94);
+        border-top: 1px solid var(--line);
+        backdrop-filter: blur(10px);
       }
 
       .map-toolbar label {
@@ -159,12 +165,32 @@
 
       .map-toolbar button {
         border: none;
-        border-radius: 8px;
-        padding: 8px 12px;
+        border-radius: 999px;
+        padding: 10px 16px;
+        width: auto;
         color: #fff;
         background: #2e7d32;
         cursor: pointer;
         font-weight: 600;
+      }
+
+      .map-toolbar button.secondary {
+        background: #1976d2;
+      }
+      .map-toolbar button.food {
+        background: #ef6c00;
+      }
+      .map-toolbar button.ghost {
+        background: #607d8b;
+      }
+
+      .map-bottom-bar {
+        min-width: 0;
+      }
+
+      body.dark .map-toolbar {
+        background: rgba(30, 30, 30, 0.94);
+        border-top-color: #3a3a3a;
       }
       #darkToggle {
         border: 1px solid #d1d7cc;
@@ -307,7 +333,7 @@
 
       .map-area {
         padding: 24px;
-        height: calc(100vh - 130px);
+        height: calc(100vh - 190px);
         min-height: 460px;
         display: flex;
         justify-content: center;
@@ -342,6 +368,29 @@
 
       .popup-btn.delete {
         background: #e74c3c;
+      }
+      .popup-btn.secondary {
+        background: #1976d2;
+      }
+      .popup-btn.food {
+        background: #ef6c00;
+      }
+      .share-badge {
+        display: inline-flex;
+        margin: 4px 0;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #fff3cd;
+        color: #7a5200;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+      .share-image {
+        width: 100%;
+        max-height: 160px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 8px 0;
       }
 
       .plant-sidebar {
@@ -1031,6 +1080,243 @@
           display: none !important;
         }
       }
+
+      /* Responsive hardening: mobile-first, no horizontal overflow */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      img,
+      video,
+      iframe,
+      canvas,
+      svg,
+      table {
+        max-width: 100%;
+      }
+      :where(
+        .shell,
+        .main,
+        .workspace,
+        .card,
+        .panel,
+        .stat,
+        .hero-card,
+        .asset-card,
+        .mission-card,
+        .command-grid,
+        .grid,
+        .topbar,
+        .user-area,
+        .section,
+        .modal-card,
+        .alert-dialog
+      ) {
+        min-width: 0;
+      }
+      :where(
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        span,
+        a,
+        button,
+        td,
+        th,
+        li,
+        label,
+        input,
+        textarea,
+        select
+      ) {
+        overflow-wrap: anywhere;
+      }
+      :where(a, button, input, select, textarea) {
+        min-height: 44px;
+      }
+      .shell {
+        min-height: 100dvh;
+      }
+      .sidebar {
+        height: 100dvh;
+      }
+      .main {
+        min-width: 0;
+        overflow-x: clip;
+      }
+      .workspace,
+      .grid,
+      .cards-grid,
+      .assets-grid,
+      .command-grid,
+      .mission-grid,
+      .team-panel-grid,
+      .alert-form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      }
+      .topbar {
+        gap: clamp(10px, 2vw, 16px);
+      }
+      .search,
+      #userLabel {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          min-width: 0;
+        }
+        .shell {
+          display: block;
+          min-height: 100dvh;
+        }
+        .main {
+          width: 100%;
+          padding: 12px;
+        }
+        .topbar {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          padding: 12px;
+          border-radius: 18px;
+        }
+        .topbar .search {
+          grid-column: 1 / -1;
+          justify-self: stretch;
+          width: 100%;
+        }
+        .user-area {
+          display: grid;
+          grid-template-columns: auto auto;
+          justify-content: end;
+          gap: 8px;
+        }
+        #userLabel {
+          max-width: min(52vw, 220px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .workspace,
+        .grid,
+        .cards-grid,
+        .assets-grid,
+        .command-grid,
+        .mission-grid,
+        .team-panel-grid,
+        .alert-form-grid,
+        .calculator-container,
+        .calculator-main,
+        .hero-grid,
+        .hero-content,
+        .content-grid {
+          grid-template-columns: 1fr !important;
+        }
+        .card,
+        .panel,
+        .mission-card,
+        .asset-card,
+        .hero-card,
+        .modal-card,
+        .alert-dialog {
+          width: 100%;
+          max-width: 100%;
+          padding: clamp(14px, 4vw, 20px);
+        }
+        .sidebar {
+          position: fixed;
+          inset: 0 auto 0 0;
+          width: min(280px, 84vw);
+          max-width: 280px;
+          height: 100dvh;
+          overflow-y: auto;
+          z-index: 1000;
+        }
+        .mobile-menu-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 900;
+        }
+        .nav {
+          grid-template-columns: 1fr;
+        }
+        .sos-float {
+          right: 14px;
+          bottom: 14px;
+          transform: scale(0.9);
+          transform-origin: bottom right;
+        }
+        .sos-hint {
+          display: none !important;
+        }
+        .alert-modal,
+        .modal {
+          padding: 12px;
+        }
+        .alert-dialog,
+        .modal-card {
+          max-height: calc(100dvh - 24px);
+          overflow-y: auto;
+        }
+        .plant-sidebar {
+          width: min(420px, 94vw);
+          height: 100dvh;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main {
+          padding: 10px;
+        }
+        .topbar {
+          grid-template-columns: auto 1fr;
+          gap: 8px;
+        }
+        .workspace,
+        .grid,
+        .cards-grid,
+        .assets-grid {
+          gap: 12px;
+        }
+        .btn,
+        button,
+        .action-btn,
+        .filter-btn {
+          width: 100%;
+          justify-content: center;
+        }
+        .hero-metrics,
+        .mini-stats,
+        .stats-grid,
+        .asset-controls,
+        .assets-toolbar {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .shell {
+          grid-template-columns: 220px minmax(0, 1fr);
+        }
+        .workspace,
+        .grid,
+        .cards-grid,
+        .assets-grid,
+        .command-grid {
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+      }
     </style>
   </head>
 
@@ -1109,6 +1395,7 @@
             </div>
           </div>
         </section>
+        <nav class="map-bottom-bar" aria-label="Map actions"></nav>
       </section>
     </div>
     <div id="mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
@@ -1264,6 +1551,11 @@
       let userLocationMarker = null;
       let userLocationWatchId = null;
       let selectedPlant = null;
+      let shareMarkers = {};
+      let foodMarkers = {};
+      let sharedItemCache = {};
+      let foodShareCache = {};
+      let activeMapLayer = "all";
 
       function applySessionState(session) {
         if (session) {
@@ -1323,6 +1615,7 @@
 
         injectMapControls();
         loadPlants();
+        loadGreenShares();
         realtime();
         startUserLocationTracking();
       }
@@ -1504,6 +1797,140 @@
       async function loadPlants() {
         await reloadPlants();
       }
+
+      function clearGreenShareMarkers() {
+        Object.values(shareMarkers).forEach((marker) =>
+          map.removeLayer(marker),
+        );
+        Object.values(foodMarkers).forEach((marker) => map.removeLayer(marker));
+        shareMarkers = {};
+        foodMarkers = {};
+        sharedItemCache = {};
+        foodShareCache = {};
+      }
+
+      function isExpiringSoon(value) {
+        if (!value) return false;
+        const expires = new Date(value).getTime();
+        if (Number.isNaN(expires)) return false;
+        const diff = expires - Date.now();
+        return diff >= 0 && diff <= 3 * 24 * 60 * 60 * 1000;
+      }
+
+      function getShareOwnerText(row) {
+        return row.owner?.email || row.owner_email || row.owner_id || "N/A";
+      }
+
+      function shouldShowLayer(layer) {
+        return activeMapLayer === "all" || activeMapLayer === layer;
+      }
+
+      async function loadGreenShares() {
+        if (!map) return;
+        clearGreenShareMarkers();
+        const [itemsRes, foodRes] = await Promise.all([
+          _supabase.from("shared_items").select("*"),
+          _supabase.from("food_shares").select("*"),
+        ]);
+        const missingTableError = [itemsRes.error, foodRes.error].find(
+          (error) =>
+            error?.code === "PGRST205" ||
+            /schema cache|Could not find the table/i.test(error?.message || ""),
+        );
+        if (missingTableError) {
+          console.warn(
+            "[loadGreenShares] Green Share tables missing. Run supabase/green_share_schema.sql in Supabase SQL editor.",
+            missingTableError,
+          );
+          return;
+        }
+        if (itemsRes.error)
+          console.error("[loadGreenShares] shared_items:", itemsRes.error);
+        if (foodRes.error)
+          console.error("[loadGreenShares] food_shares:", foodRes.error);
+        const ownerIds = [
+          ...(itemsRes.data || []),
+          ...(foodRes.data || []),
+        ].map((row) => row.owner_id);
+        const ownerMap = await fetchOwnerMeta(ownerIds);
+        (itemsRes.data || [])
+          .map((row) => ({
+            ...row,
+            owner_email: ownerMap[row.owner_id],
+            owner: ownerMap[row.owner_id]
+              ? { email: ownerMap[row.owner_id] }
+              : null,
+          }))
+          .forEach(renderSharedItemMarker);
+        (foodRes.data || [])
+          .map((row) => ({
+            ...row,
+            owner_email: ownerMap[row.owner_id],
+            owner: ownerMap[row.owner_id]
+              ? { email: ownerMap[row.owner_id] }
+              : null,
+          }))
+          .forEach(renderFoodShareMarker);
+      }
+
+      function emojiMarkerIcon(emoji, bg) {
+        return L.divIcon({
+          className: "",
+          html: `<div style="width:34px;height:34px;border-radius:999px;background:${bg};display:grid;place-items:center;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);font-size:18px">${emoji}</div>`,
+          iconSize: [34, 34],
+          iconAnchor: [17, 17],
+          popupAnchor: [0, -17],
+        });
+      }
+
+      function renderSharedItemMarker(item) {
+        const lat = Number(item.latitude);
+        const lng = Number(item.longitude);
+        if (
+          !Number.isFinite(lat) ||
+          !Number.isFinite(lng) ||
+          !shouldShowLayer("share")
+        )
+          return;
+        sharedItemCache[item.id] = item;
+        const mine =
+          normalizeIdentity(item.owner_id) === normalizeIdentity(currentUserId);
+        const reservedByMe =
+          normalizeIdentity(item.borrower_id) ===
+          normalizeIdentity(currentUserId);
+        const canReserve = item.status === "available" && !mine;
+        const canReturn =
+          ["reserved", "borrowed"].includes(item.status) &&
+          (mine || reservedByMe);
+        const popup = `<div style="max-width:230px"><b>🧰 ${escapeHtml(item.title)}</b><p>${escapeHtml(item.description || "")}</p>${item.image_url ? `<img class="share-image" src="${escapeHtml(item.image_url)}"/>` : ""}<div><b>Chủ:</b> ${escapeHtml(getShareOwnerText(item))}</div><div><b>Cọc:</b> ${Number(item.deposit_coins || 0)} coins</div><div><b>Trạng thái:</b> ${escapeHtml(item.status)}</div>${canReserve ? `<button class="popup-btn secondary" onclick="reserveSharedItem('${item.id}')">Đặt cọc mượn</button>` : ""}${canReturn ? `<button class="popup-btn" onclick="completeSharedReturn('${item.id}')">Xác nhận trả (-5% phí)</button><button class="popup-btn delete" onclick="cancelSharedReservation('${item.id}')">Hủy đặt</button>` : ""}</div>`;
+        shareMarkers[item.id] = L.marker([lat, lng], {
+          icon: emojiMarkerIcon("🧰", "#1976d2"),
+        })
+          .addTo(map)
+          .bindPopup(popup);
+      }
+
+      function renderFoodShareMarker(food) {
+        const lat = Number(food.latitude);
+        const lng = Number(food.longitude);
+        if (
+          !Number.isFinite(lat) ||
+          !Number.isFinite(lng) ||
+          !shouldShowLayer("food")
+        )
+          return;
+        foodShareCache[food.id] = food;
+        const mine =
+          normalizeIdentity(food.owner_id) === normalizeIdentity(currentUserId);
+        const canClaim = food.status === "available" && !mine;
+        const urgent = isExpiringSoon(food.expires_at);
+        const popup = `<div style="max-width:230px"><b>🍎 ${escapeHtml(food.food_name)}</b>${urgent ? `<div class="share-badge">Ưu tiên nhận ngay</div>` : ""}<p>${escapeHtml(food.description || "")}</p>${food.image_url ? `<img class="share-image" src="${escapeHtml(food.image_url)}"/>` : ""}<div><b>Chủ:</b> ${escapeHtml(getShareOwnerText(food))}</div><div><b>SL:</b> ${escapeHtml(food.quantity || "N/A")}</div><div><b>EXP:</b> ${escapeHtml(formatDate(food.expires_at))}</div>${canClaim ? `<button class="popup-btn food" onclick="claimFoodShare('${food.id}')">Nhận thực phẩm</button>` : ""}</div>`;
+        foodMarkers[food.id] = L.marker([lat, lng], {
+          icon: emojiMarkerIcon("🍎", "#ef6c00"),
+        })
+          .addTo(map)
+          .bindPopup(popup);
+      }
       function pickImageFile() {
         return new Promise((resolve) => {
           const overlay = document.createElement("div");
@@ -1644,19 +2071,50 @@
 
       function injectMapControls() {
         if (document.getElementById("plantHereBtn")) return;
-        const topbar = document.querySelector(".topbar");
-        if (!topbar) return;
+        const bottomBar = document.querySelector(".map-bottom-bar");
+        if (!bottomBar) return;
 
         const controls = document.createElement("div");
         controls.className = "map-toolbar";
         controls.innerHTML = `
-              <button id="plantHereBtn" type="button">
-                Trồng Cây Ở Đây
-              </button>
+              <button id="plantHereBtn" type="button">Trồng Cây Ở Đây</button>
+              <button id="addShareItemBtn" class="secondary" type="button">Chia sẻ đồ dùng</button>
+              <button id="addFoodShareBtn" class="food" type="button">Quyên góp thực phẩm</button>
+              <button id="showAllLayerBtn" class="ghost" type="button">Tất cả</button>
+              <button id="showShareLayerBtn" class="secondary" type="button">Đồ dùng</button>
+              <button id="showFoodLayerBtn" class="food" type="button">Thực phẩm</button>
             `;
-        topbar.appendChild(controls);
+        bottomBar.appendChild(controls);
 
         const plantHereBtn = document.getElementById("plantHereBtn");
+
+        document
+          .getElementById("addShareItemBtn")
+          ?.addEventListener("click", () => promptCreateSharedItem());
+        document
+          .getElementById("addFoodShareBtn")
+          ?.addEventListener("click", () => promptCreateFoodShare());
+        document
+          .getElementById("showAllLayerBtn")
+          ?.addEventListener("click", () => {
+            activeMapLayer = "all";
+            reloadPlants();
+            loadGreenShares();
+          });
+        document
+          .getElementById("showShareLayerBtn")
+          ?.addEventListener("click", () => {
+            activeMapLayer = "share";
+            clearPlantMarkers();
+            loadGreenShares();
+          });
+        document
+          .getElementById("showFoodLayerBtn")
+          ?.addEventListener("click", () => {
+            activeMapLayer = "food";
+            clearPlantMarkers();
+            loadGreenShares();
+          });
 
         plantHereBtn.addEventListener("click", () => {
           if (!navigator.geolocation) {
@@ -1911,6 +2369,112 @@
 
         return uploadedUrls;
       }
+      function getCurrentLatLng() {
+        return new Promise((resolve) => {
+          if (!navigator.geolocation) return resolve(null);
+          navigator.geolocation.getCurrentPosition(
+            (pos) =>
+              resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+            () => {
+              alert("Không lấy được vị trí.");
+              resolve(null);
+            },
+            { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
+          );
+        });
+      }
+
+      async function promptCreateSharedItem() {
+        const loc = await getCurrentLatLng();
+        if (!loc) return;
+        const title = prompt("Tên đồ dùng:");
+        if (!title?.trim()) return;
+        const category = prompt("Loại đồ dùng:", "other");
+        const deposit = Number(prompt("Tiền cọc (coins):", "10") || 0);
+        const description = prompt("Mô tả:");
+        const image_url = prompt("URL ảnh (tùy chọn):");
+        const { error } = await _supabase.from("shared_items").insert({
+          owner_id: currentUserId,
+          title: title.trim(),
+          category: category || "other",
+          description: description || null,
+          image_url: image_url || null,
+          latitude: loc.lat,
+          longitude: loc.lng,
+          deposit_coins: Math.max(0, Math.floor(deposit || 0)),
+        });
+        if (error) return alert(error.message || "Không tạo được đồ dùng.");
+        await loadGreenShares();
+      }
+
+      async function promptCreateFoodShare() {
+        const loc = await getCurrentLatLng();
+        if (!loc) return;
+        const food_name = prompt("Tên thực phẩm:");
+        if (!food_name?.trim()) return;
+        const quantity = prompt("Số lượng:");
+        const expires_at = prompt("EXP (YYYY-MM-DD hoặc bỏ trống):");
+        const description = prompt("Mô tả:");
+        const image_url = prompt("URL ảnh (tùy chọn):");
+        const pickup_note = prompt("Ghi chú điểm nhận:");
+        const { error } = await _supabase.from("food_shares").insert({
+          owner_id: currentUserId,
+          food_name: food_name.trim(),
+          quantity: quantity || null,
+          description: description || null,
+          image_url: image_url || null,
+          latitude: loc.lat,
+          longitude: loc.lng,
+          expires_at: expires_at || null,
+          pickup_note: pickup_note || null,
+        });
+        if (error) return alert(error.message || "Không tạo được thực phẩm.");
+        await loadGreenShares();
+      }
+
+      async function reserveSharedItem(id) {
+        if (!confirm("Khóa coins để đặt cọc mượn đồ dùng này?")) return;
+        const { error } = await _supabase.rpc("reserve_shared_item", {
+          p_item_id: id,
+        });
+        if (error) return alert(error.message || "Đặt cọc thất bại.");
+        await loadGreenShares();
+      }
+
+      async function completeSharedReturn(id) {
+        if (!confirm("Xác nhận trả đồ? Hệ thống hoàn 95% cọc, trừ 5% phí."))
+          return;
+        const { error } = await _supabase.rpc("complete_shared_item_return", {
+          p_item_id: id,
+        });
+        if (error) return alert(error.message || "Xác nhận trả thất bại.");
+        await loadGreenShares();
+      }
+
+      async function cancelSharedReservation(id) {
+        if (!confirm("Hủy đặt cọc và hoàn đủ coins?")) return;
+        const { error } = await _supabase.rpc(
+          "cancel_shared_item_reservation",
+          { p_item_id: id },
+        );
+        if (error) return alert(error.message || "Hủy thất bại.");
+        await loadGreenShares();
+      }
+
+      async function claimFoodShare(id) {
+        const { error } = await _supabase
+          .from("food_shares")
+          .update({
+            status: "claimed",
+            claimed_by: currentUserId,
+            claimed_at: new Date().toISOString(),
+          })
+          .eq("id", id)
+          .eq("status", "available");
+        if (error) return alert(error.message || "Nhận thực phẩm thất bại.");
+        await loadGreenShares();
+      }
+
       // REALTIME
       function realtime() {
         _supabase
@@ -1933,6 +2497,20 @@
               }
               delete plantCache[id];
             },
+          )
+          .subscribe();
+
+        _supabase
+          .channel("green-share")
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "shared_items" },
+            () => loadGreenShares(),
+          )
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "food_shares" },
+            () => loadGreenShares(),
           )
           .subscribe();
       }
@@ -2145,6 +2723,10 @@
       window.viewInfo = viewInfo;
       window.deletePlant = deletePlant;
       window.addPlantUpdate = addPlantUpdate;
+      window.reserveSharedItem = reserveSharedItem;
+      window.completeSharedReturn = completeSharedReturn;
+      window.cancelSharedReservation = cancelSharedReservation;
+      window.claimFoodShare = claimFoodShare;
 
       window.addEventListener("beforeunload", () => {
         if (userLocationWatchId !== null) {

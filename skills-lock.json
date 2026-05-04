@@ -37,6 +37,12 @@
       "skillPath": ".claude/skills/phaser-gamedev/SKILL.md",
       "computedHash": "7c189dc3905cea3c83b593bdeaba32d134dd3e3da70e7b7663c1e1612def64bf"
     },
+    "responsive-design": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/ui-design/skills/responsive-design/SKILL.md",
+      "computedHash": "1c756f7e216c16c91be788a0f64ae5d94451b5ffe076a1e120f671e2a3c9bd3e"
+    },
     "senior-backend": {
       "source": "davila7/claude-code-templates",
       "sourceType": "github",

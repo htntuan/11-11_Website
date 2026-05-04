@@ -382,9 +382,16 @@
 
       .hero-panel .actions {
         margin-top: 14px;
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
-        flex-wrap: wrap;
+        align-items: stretch;
+      }
+
+      .hero-panel .actions button,
+      .hero-panel .actions a {
+        width: 100%;
+        justify-content: center;
       }
 
       .hero-panel .actions a {
@@ -481,7 +488,7 @@
 
       .hero-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+        grid-template-columns: 1fr;
         gap: 18px;
         align-items: start;
       }
@@ -564,27 +571,10 @@
         font-weight: 700;
       }
 
-      .metric-help,
-      .stat-help,
-      .muted-copy,
       .history-meta {
         margin-top: 6px;
         font-size: 0.84rem;
         color: #6d7587;
-      }
-
-      .hero-side {
-        padding: 16px;
-        border-radius: 16px;
-        background: linear-gradient(160deg, #255a37, #3a7d44 62%, #69a65a);
-        color: #fff;
-      }
-
-      .hero-side h3,
-      .hero-side p,
-      .hero-side .tiny-label,
-      .hero-side .stat-help {
-        color: #fff;
       }
 
       .mini-stats {
@@ -839,14 +829,6 @@
         font: inherit;
       }
 
-      .submission-hint {
-        padding: 12px;
-        border-radius: 12px;
-        background: #edf6e8;
-        color: #2f6840;
-        font-size: 0.88rem;
-      }
-
       .history-item,
       .badge-item,
       .team-card {
@@ -908,9 +890,6 @@
       }
 
       body.dark .hero-copy,
-      body.dark .metric-help,
-      body.dark .stat-help,
-      body.dark .muted-copy,
       body.dark .history-meta,
       body.dark .mission-card p,
       body.dark .badge-item p,
@@ -923,7 +902,6 @@
       body.dark .pill,
       body.dark .chip,
       body.dark .leaderboard-tabs,
-      body.dark .submission-hint,
       body.dark .empty-state,
       body.dark .rank-number {
         background: #202820;
@@ -1180,6 +1158,16 @@
           grid-template-columns: 1fr;
         }
 
+        .hero-panel .actions,
+        .hero-metrics {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .mini-stats,
+        .stats-row {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
         .section-span-8,
         .section-span-6,
         .section-span-4 {
@@ -1215,7 +1203,7 @@
         }
 
         .workspace {
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          grid-template-columns: minmax(0, 1fr) !important;
         }
 
         .section-span-8,
@@ -1383,7 +1371,6 @@
         gap: 16px;
       }
 
-      .team-idea-card,
       .team-form-panel {
         border: 1px solid #dfe8d9;
         border-radius: 18px;
@@ -1391,38 +1378,15 @@
         background: linear-gradient(180deg, #fbfdf9 0%, #f3f7ef 100%);
       }
 
-      .team-idea-card h4,
       .team-form-panel h4 {
         margin: 0 0 8px;
         font-size: 1.02rem;
       }
 
-      .team-idea-card p,
       .team-form-panel p {
         margin: 0;
         color: var(--muted);
         line-height: 1.5;
-      }
-
-      .team-checklist {
-        margin: 14px 0 0;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        gap: 10px;
-      }
-
-      .team-checklist li {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        color: #44525d;
-      }
-
-      .team-checklist .material-symbols-outlined {
-        color: #2f7d45;
-        font-size: 1.1rem;
-        margin-top: 1px;
       }
 
       .team-form {
@@ -1449,11 +1413,6 @@
         flex-wrap: wrap;
       }
 
-      .helper-copy {
-        font-size: 0.84rem;
-        color: var(--muted);
-      }
-
       body.dark .team-modal {
         background: #252526;
         border-color: #3a3a3a;
@@ -1478,15 +1437,9 @@
         color: #c8d1c6;
       }
 
-      body.dark .team-idea-card,
       body.dark .team-form-panel {
         background: linear-gradient(180deg, #2b312c 0%, #232723 100%);
         border-color: #3b453b;
-      }
-
-      body.dark .team-checklist li,
-      body.dark .helper-copy {
-        color: #cfd6d0;
       }
 
       body.menu-open {
@@ -1587,6 +1540,509 @@
           display: none !important;
         }
       }
+
+      /* Responsive hardening: mobile-first, no horizontal overflow */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      img,
+      video,
+      iframe,
+      canvas,
+      svg,
+      table {
+        max-width: 100%;
+      }
+      :where(
+        .shell,
+        .main,
+        .workspace,
+        .card,
+        .panel,
+        .stat,
+        .hero-card,
+        .asset-card,
+        .mission-card,
+        .command-grid,
+        .grid,
+        .topbar,
+        .user-area,
+        .section,
+        .modal-card,
+        .alert-dialog
+      ) {
+        min-width: 0;
+      }
+      :where(
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        span,
+        a,
+        button,
+        td,
+        th,
+        li,
+        label,
+        input,
+        textarea,
+        select
+      ) {
+        overflow-wrap: break-word;
+      }
+      :where(a, button, input, select, textarea) {
+        min-height: 44px;
+      }
+      .shell {
+        min-height: 100dvh;
+      }
+      .sidebar {
+        height: 100dvh;
+      }
+      .main {
+        min-width: 0;
+        overflow-x: clip;
+      }
+      .grid,
+      .cards-grid,
+      .assets-grid,
+      .command-grid,
+      .mission-grid,
+      .team-panel-grid,
+      .alert-form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      }
+
+      .workspace {
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+      }
+
+      .combat-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+      }
+      .topbar {
+        gap: clamp(10px, 2vw, 16px);
+      }
+      .search,
+      #userLabel {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          min-width: 0;
+        }
+        .shell {
+          display: block;
+          min-height: 100dvh;
+        }
+        .main {
+          width: 100%;
+          padding: 12px;
+        }
+        .topbar {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          padding: 12px;
+          border-radius: 18px;
+        }
+        .topbar .search {
+          grid-column: 1 / -1;
+          justify-self: stretch;
+          width: 100%;
+        }
+        .user-area {
+          display: grid;
+          grid-template-columns: auto auto;
+          justify-content: end;
+          gap: 8px;
+        }
+        #userLabel {
+          max-width: min(52vw, 220px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .workspace,
+        .grid,
+        .cards-grid,
+        .assets-grid,
+        .command-grid,
+        .mission-grid,
+        .team-panel-grid,
+        .alert-form-grid,
+        .calculator-container,
+        .calculator-main,
+        .hero-grid,
+        .hero-content,
+        .content-grid {
+          grid-template-columns: 1fr !important;
+        }
+        .card,
+        .panel,
+        .mission-card,
+        .asset-card,
+        .hero-card,
+        .modal-card,
+        .alert-dialog {
+          width: 100%;
+          max-width: 100%;
+          padding: clamp(14px, 4vw, 20px);
+        }
+        .sidebar {
+          position: fixed;
+          inset: 0 auto 0 0;
+          width: min(280px, 84vw);
+          max-width: 280px;
+          height: 100dvh;
+          overflow-y: auto;
+          z-index: 1000;
+        }
+        .mobile-menu-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 900;
+        }
+        .nav {
+          grid-template-columns: 1fr;
+        }
+        .sos-float {
+          right: 14px;
+          bottom: 14px;
+          transform: scale(0.9);
+          transform-origin: bottom right;
+        }
+        .sos-hint {
+          display: none !important;
+        }
+        .alert-modal,
+        .modal {
+          padding: 12px;
+        }
+        .alert-dialog,
+        .modal-card {
+          max-height: calc(100dvh - 24px);
+          overflow-y: auto;
+        }
+        .plant-sidebar {
+          width: min(420px, 94vw);
+          height: 100dvh;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main {
+          padding: 10px;
+        }
+        .topbar {
+          grid-template-columns: auto 1fr;
+          gap: 8px;
+        }
+        .workspace,
+        .grid,
+        .cards-grid,
+        .assets-grid {
+          gap: 12px;
+        }
+        .btn,
+        button,
+        .action-btn,
+        .filter-btn {
+          width: 100%;
+          justify-content: center;
+        }
+        .hero-metrics,
+        .mini-stats,
+        .stats-grid,
+        .asset-controls,
+        .assets-toolbar {
+          grid-template-columns: 1fr !important;
+        }
+
+        .hero-panel .actions {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 6px;
+        }
+
+        .hero-panel .actions button,
+        .hero-panel .actions a {
+          width: 100%;
+          min-width: 0;
+          padding-inline: 6px;
+          font-size: 0.74rem;
+          line-height: 1.15;
+          white-space: normal;
+        }
+      }
+
+      /* Green Combat responsive polish */
+      .workspace,
+      .combat-grid,
+      .hero-layout,
+      .stats-row,
+      .hero-metrics,
+      .mini-stats,
+      .field-grid,
+      .leaderboard-list,
+      .mission-list,
+      .history-list,
+      .team-list,
+      .badge-grid,
+      .submission-form,
+      .submission-actions,
+      .mission-footer,
+      .history-footer,
+      .pill-row {
+        min-width: 0;
+      }
+
+      .hero-title,
+      .hero-copy,
+      .section-header h3,
+      .metric-value,
+      .rank-name,
+      .mission-card h4,
+      .badge-item h4,
+      .history-item,
+      .chip,
+      .pill {
+        overflow-wrap: break-word;
+        word-break: normal;
+      }
+
+      @media (max-width: 768px) {
+        .workspace {
+          padding: clamp(12px, 3vw, 18px);
+          gap: 16px;
+        }
+
+        #teamList,
+        #missionList,
+        #badgeList,
+        #historyList {
+          display: flex;
+          gap: 12px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding: 2px 2px 12px;
+          margin-inline: -2px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(77, 128, 73, 0.45) transparent;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        #teamList::-webkit-scrollbar,
+        #missionList::-webkit-scrollbar,
+        #badgeList::-webkit-scrollbar,
+        #historyList::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        #teamList::-webkit-scrollbar-thumb,
+        #missionList::-webkit-scrollbar-thumb,
+        #badgeList::-webkit-scrollbar-thumb,
+        #historyList::-webkit-scrollbar-thumb {
+          border-radius: 999px;
+          background: rgba(77, 128, 73, 0.45);
+        }
+
+        #teamList > *,
+        #missionList > *,
+        #badgeList > *,
+        #historyList > * {
+          flex: 0 0 min(82vw, 340px);
+          scroll-snap-align: start;
+        }
+
+        #teamList .empty-state,
+        #missionList .empty-state,
+        #badgeList .empty-state,
+        #historyList .empty-state {
+          flex-basis: 100%;
+        }
+
+        .team-card,
+        .mission-card,
+        .badge-item,
+        .history-item {
+          min-height: 100%;
+        }
+
+        .hero-panel {
+          padding: clamp(18px, 5vw, 24px);
+          overflow: hidden;
+        }
+
+        .hero-panel::after {
+          opacity: 0.28;
+          transform: scale(0.72);
+          transform-origin: top right;
+        }
+
+        .hero-layout,
+        .combat-grid,
+        .field-grid,
+        .submission-form {
+          grid-template-columns: 1fr !important;
+        }
+
+        .hero-panel .actions {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .hero-metrics {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .mini-stats {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .stats-row {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .hero-title {
+          max-width: 100%;
+          font-size: clamp(2rem, 8vw, 3rem);
+          line-height: 1.12;
+          letter-spacing: -0.03em;
+        }
+
+        .hero-copy {
+          max-width: 100%;
+          font-size: clamp(0.95rem, 3.5vw, 1rem);
+        }
+
+        .rank-card,
+        .mission-card,
+        .history-item,
+        .team-card,
+        .submission-card,
+        .badge-item,
+        .metric-card,
+        .mini-stat {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .leaderboard-tabs,
+        .submission-actions,
+        .mission-footer,
+        .history-footer,
+        .team-form-actions {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .leaderboard-tabs button,
+        .submission-actions button,
+        .mission-footer button,
+        .hero-panel.actions button,
+        .hero-panel.actions a,
+        select,
+        input,
+        textarea {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .topbar h1 {
+          font-size: clamp(1.05rem, 6vw, 1.35rem);
+        }
+
+        .hero-panel::after {
+          display: none;
+        }
+
+        .hero-title {
+          font-size: clamp(1.75rem, 10vw, 2.35rem);
+          line-height: 1.08;
+        }
+
+        .hero-metrics,
+        .mini-stats,
+        .stats-row {
+          grid-template-columns: 1fr !important;
+        }
+
+        .hero-panel .actions {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 6px;
+        }
+
+        .hero-panel .actions button,
+        .hero-panel .actions a {
+          width: 100%;
+          min-width: 0;
+          padding-inline: 6px;
+          font-size: 0.74rem;
+          line-height: 1.15;
+          white-space: normal;
+        }
+
+        .section-header,
+        .rank-card,
+        .mission-card,
+        .history-item,
+        .team-card,
+        .submission-card,
+        .badge-item,
+        .metric-card,
+        .mini-stat {
+          padding: 14px;
+          border-radius: 14px;
+        }
+
+        .pill-row,
+        .metric-row {
+          gap: 8px;
+        }
+
+        .chip,
+        .pill,
+        .status-pill {
+          white-space: normal;
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .shell {
+          grid-template-columns: 220px minmax(0, 1fr);
+        }
+        .grid,
+        .cards-grid,
+        .assets-grid,
+        .command-grid {
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1664,16 +2120,9 @@
               <div>
                 <span class="eyebrow">
                   <span class="material-symbols-outlined">bolt</span>
-                  Green Combat Season
+                  Green Combat
                 </span>
-                <h2 class="hero-title">
-                  Thi đua bằng hành động xanh thật ngoài đời.
-                </h2>
-                <p class="hero-copy">
-                  Green Combat biến việc trồng cây, chăm cây, nhặt rác và duy
-                  trì thói quen xanh thành một cuộc đua có xác minh, có bảng xếp
-                  hạng và có dấu ấn tập thể.
-                </p>
+                <h2 class="hero-title">Hành động xanh. Ghi điểm thật.</h2>
                 <div class="hero-panel actions">
                   <button id="joinTeamBtn" class="action-btn" type="button">
                     Tham gia đội
@@ -1693,53 +2142,17 @@
                   <article class="metric-card">
                     <div class="metric-label">Hạng hiện tại</div>
                     <div id="heroRankValue" class="metric-value">#--</div>
-                    <div class="metric-help">
-                      Xếp hạng cá nhân trong mùa hiện tại
-                    </div>
                   </article>
                   <article class="metric-card">
                     <div class="metric-label">Điểm chiến dịch</div>
                     <div id="heroPointsValue" class="metric-value">0</div>
-                    <div class="metric-help">
-                      Tổng điểm từ hành động đã duyệt
-                    </div>
                   </article>
                   <article class="metric-card">
                     <div class="metric-label">Chuỗi duy trì</div>
                     <div id="heroStreakValue" class="metric-value">0 ngày</div>
-                    <div class="metric-help">
-                      Đo mức độ bền bỉ thay vì phong trào
-                    </div>
                   </article>
                 </div>
               </div>
-
-              <aside class="hero-side">
-                <div class="tiny-label">Tuyên ngôn Green Truth</div>
-                <h3>Không phải game ảo. Đây là bảng điểm cho tác động thật.</h3>
-                <p>
-                  Mỗi lượt cộng điểm nên đi kèm bằng chứng, trách nhiệm và khả
-                  năng duy trì. Càng ít “greenwashing”, càng leo hạng bền vững.
-                </p>
-                <div class="mini-stats">
-                  <div class="mini-stat">
-                    <span class="tiny-label">Mùa đang chạy</span>
-                    <strong id="seasonLabel">April Sprint</strong>
-                  </div>
-                  <div class="mini-stat">
-                    <span class="tiny-label">Đội của bạn</span>
-                    <strong id="teamSummaryValue">Chưa tham gia</strong>
-                  </div>
-                  <div class="mini-stat">
-                    <span class="tiny-label">Hành động đã duyệt</span>
-                    <strong id="approvedCountValue">0</strong>
-                  </div>
-                  <div class="mini-stat">
-                    <span class="tiny-label">Mục tiêu gần nhất</span>
-                    <strong>Top 10 cá nhân</strong>
-                  </div>
-                </div>
-              </aside>
             </div>
             <div id="combatError" class="data-error hidden"></div>
           </section>
@@ -1749,22 +2162,18 @@
               <article class="stat-tile">
                 <div class="stat-label">Người tham gia</div>
                 <div id="participantsValue" class="stat-value">0</div>
-                <div class="stat-help">Tổng tài khoản có điểm hoặc bài gửi</div>
               </article>
               <article class="stat-tile">
                 <div class="stat-label">Đội đang hoạt động</div>
                 <div id="teamsValue" class="stat-value">0</div>
-                <div class="stat-help">Các lớp/nhóm đã vào mùa thi đua</div>
               </article>
               <article class="stat-tile">
                 <div class="stat-label">Hành động đã duyệt</div>
                 <div id="approvedActionsValue" class="stat-value">0</div>
-                <div class="stat-help">Bằng chứng đã được phê duyệt</div>
               </article>
               <article class="stat-tile">
                 <div class="stat-label">Tổng điểm toàn mùa</div>
                 <div id="globalPointsValue" class="stat-value">0</div>
-                <div class="stat-help">Điểm được sinh từ các tác động thật</div>
               </article>
             </section>
 
@@ -1773,9 +2182,6 @@
                 <div>
                   <div class="section-kicker">Leaderboard</div>
                   <h3>Bảng xếp hạng xanh</h3>
-                  <p class="muted-copy">
-                    Theo dõi cá nhân và đội đang dẫn đầu mùa thi đua.
-                  </p>
                 </div>
                 <div
                   class="leaderboard-tabs"
@@ -1797,11 +2203,7 @@
             <section class="panel section-span-4">
               <div class="section-header">
                 <div>
-                  <div class="section-kicker">Your teams</div>
                   <h3>Nhóm bạn đang góp sức</h3>
-                  <p class="muted-copy">
-                    Dùng team mode để đẩy tinh thần lớp và trách nhiệm tập thể.
-                  </p>
                 </div>
               </div>
               <div id="teamList" class="team-list"></div>
@@ -1810,12 +2212,7 @@
             <section class="panel section-span-8">
               <div class="section-header">
                 <div>
-                  <div class="section-kicker">Missions</div>
                   <h3>Nhiệm vụ đang mở</h3>
-                  <p class="muted-copy">
-                    Mỗi nhiệm vụ nên gắn với tác động thật, minh chứng rõ và
-                    điểm thưởng minh bạch.
-                  </p>
                 </div>
               </div>
               <div id="missionList" class="mission-list"></div>
@@ -1824,11 +2221,7 @@
             <section class="panel section-span-4">
               <div class="section-header">
                 <div>
-                  <div class="section-kicker">Badges</div>
                   <h3>Huy hiệu tiến độ</h3>
-                  <p class="muted-copy">
-                    Khen thưởng sự duy trì, không chỉ khoảnh khắc check-in.
-                  </p>
                 </div>
               </div>
               <div id="badgeList" class="badge-list"></div>
@@ -1837,12 +2230,7 @@
             <section id="submissionSection" class="panel section-span-6">
               <div class="section-header">
                 <div>
-                  <div class="section-kicker">Submit proof</div>
                   <h3>Gửi hành động để xét duyệt</h3>
-                  <p class="muted-copy">
-                    Bắt đầu với bài gửi thủ công, sau đó có thể nối thêm xác
-                    minh tự động từ các tính năng khác.
-                  </p>
                 </div>
               </div>
               <div class="submission-card">
@@ -1887,13 +2275,8 @@
                     <textarea
                       id="noteInput"
                       rows="5"
-                      placeholder="Mô tả ngắn hành động, thời gian, địa điểm và tác động thực tế"
+                      placeholder="Mô tả ngắn"
                     ></textarea>
-                  </div>
-                  <div class="submission-hint">
-                    MVP này ưu tiên luồng rõ ràng: tạo bài gửi `pending`, admin
-                    duyệt, trigger cộng điểm. Nếu bạn đã có storage bucket, bước
-                    tiếp theo là thay URL thủ công bằng upload thật.
                   </div>
                   <div class="submission-actions">
                     <button class="action-btn" type="submit">
@@ -1915,12 +2298,7 @@
             <section class="panel section-span-6">
               <div class="section-header">
                 <div>
-                  <div class="section-kicker">Recent activity</div>
                   <h3>Lịch sử bài gửi gần đây</h3>
-                  <p class="muted-copy">
-                    Theo dõi trạng thái `pending`, `approved`, `rejected` và
-                    phản hồi từ người duyệt.
-                  </p>
                 </div>
               </div>
               <div id="historyList" class="history-list"></div>
@@ -1939,12 +2317,7 @@
       >
         <div class="team-modal-header">
           <div>
-            <div class="section-kicker">Team mode</div>
             <h3 id="teamModalTitle">Tạo đội mới hoặc tham gia bằng mã</h3>
-            <p>
-              Đây là bước hợp lý tiếp theo sau leaderboard: cho người dùng thật
-              sự gia nhập cơ chế thi đua thay vì chỉ xem dữ liệu.
-            </p>
           </div>
           <button
             id="closeTeamModalBtn"
@@ -1976,40 +2349,9 @@
           </div>
 
           <div class="team-panel-grid">
-            <section class="team-idea-card">
-              <h4>Tinh thần của Green Combat</h4>
-              <p>
-                Mỗi đội nên đại diện cho một lớp, nhóm hoặc cộng đồng nhỏ có thể
-                tự nhắc nhau duy trì hành động xanh trong thời gian dài.
-              </p>
-              <ul class="team-checklist">
-                <li>
-                  <span class="material-symbols-outlined">verified</span
-                  ><span>Điểm đội cộng từ các submission đã được duyệt.</span>
-                </li>
-                <li>
-                  <span class="material-symbols-outlined">groups</span
-                  ><span
-                    >Team mode giúp biến trách nhiệm cá nhân thành mục tiêu
-                    chung.</span
-                  >
-                </li>
-                <li>
-                  <span class="material-symbols-outlined">flag</span
-                  ><span
-                    >Bắt đầu đơn giản với mã đội ngắn, dễ chia sẻ trong
-                    lớp.</span
-                  >
-                </li>
-              </ul>
-            </section>
-
             <section class="team-form-panel">
               <div id="createTeamPanel">
                 <h4>Tạo đội mới</h4>
-                <p>
-                  Người tạo sẽ trở thành `owner` của đội và được thêm vào ngay.
-                </p>
                 <form id="createTeamForm" class="team-form">
                   <div class="field">
                     <label for="teamNameInput">Tên đội</label>
@@ -2036,7 +2378,7 @@
                     <textarea
                       id="teamDescriptionInput"
                       rows="4"
-                      placeholder="Nhóm này thi đua theo mục tiêu gì?"
+                      placeholder="Mô tả ngắn"
                     ></textarea>
                   </div>
                   <div class="team-form-actions">
@@ -2049,10 +2391,6 @@
 
               <div id="joinTeamPanel" class="hidden">
                 <h4>Tham gia bằng mã đội</h4>
-                <p>
-                  Nhập đúng mã để gắn tài khoản của bạn vào bảng điểm đội hiện
-                  có.
-                </p>
                 <form id="joinTeamForm" class="team-form">
                   <div class="field">
                     <label for="joinTeamCodeInput">Mã đội</label>
@@ -2070,10 +2408,6 @@
                     </button>
                   </div>
                 </form>
-                <div class="helper-copy">
-                  Nếu bạn đã là thành viên, hệ thống sẽ báo trạng thái thay vì
-                  tạo trùng.
-                </div>
               </div>
             </section>
           </div>
@@ -2145,8 +2479,7 @@
           {
             id: "mission-plant-tree",
             title: "Plant a Tree",
-            description:
-              "Tạo hồ sơ cây mới với minh chứng trồng và người chịu trách nhiệm.",
+            description: "Trồng cây mới.",
             action_type: "plant_tree",
             points_reward: 30,
             verification_type: "manual",
@@ -2156,8 +2489,7 @@
           {
             id: "mission-plant-care",
             title: "Care for Your Tree",
-            description:
-              "Gửi nhật ký theo dõi cây để chứng minh việc chăm sóc lâu dài.",
+            description: "Chăm cây.",
             action_type: "plant_care",
             points_reward: 15,
             verification_type: "manual",
@@ -2167,8 +2499,7 @@
           {
             id: "mission-cleanup",
             title: "Cleanup Submission",
-            description:
-              "Nộp bằng chứng nhặt rác hoặc dọn dẹp có thể kiểm tra lại.",
+            description: "Dọn rác.",
             action_type: "cleanup_submission",
             points_reward: 20,
             verification_type: "manual",
@@ -2215,12 +2546,12 @@
           {
             badge_key: "first_action",
             name: "First Action",
-            description: "Duyệt thành công bài gửi đầu tiên.",
+            description: "Bài gửi đầu tiên.",
           },
           {
             badge_key: "tree_guardian",
             name: "Tree Guardian",
-            description: "Theo dõi cây đều đặn qua nhiều lần cập nhật.",
+            description: "Theo dõi cây đều.",
           },
         ],
         submissions: [
@@ -2440,7 +2771,7 @@
                   <span class="chip">${escapeHtml(mission.mode || "both")}</span>
                 </div>
                 <h4>${escapeHtml(mission.title)}</h4>
-                <p>${escapeHtml(mission.description || "Nhiệm vụ chưa có mô tả.")}</p>
+                <p>${escapeHtml(mission.description || "")}</p>
                 <div class="mission-footer">
                   <span class="history-meta">Xác minh: ${escapeHtml(mission.verification_type || "manual")}</span>
                   <button class="secondary-btn mission-submit-btn" type="button" data-mission-id="${escapeHtml(mission.id)}">Nộp cho nhiệm vụ này</button>
@@ -2495,7 +2826,7 @@
                   <span class="pill">${escapeHtml(badge.badge_key || "badge")}</span>
                 </div>
                 <h4>${escapeHtml(badge.name || "Unnamed badge")}</h4>
-                <p>${escapeHtml(badge.description || "Không có mô tả")}</p>
+                <p>${escapeHtml(badge.description || "")}</p>
               </article>
             `,
           )
@@ -2505,7 +2836,7 @@
       function renderTeams(teams) {
         if (!teams.length) {
           teamList.innerHTML =
-            '<div class="empty-state">Bạn chưa tham gia đội nào. Team mode sẽ được mở khi có nhóm hoặc lớp.</div>';
+            '<div class="empty-state">Bạn chưa tham gia đội nào.</div>';
           return;
         }
 
@@ -2518,7 +2849,7 @@
                   <span class="chip">${escapeHtml(team.code || "No code")}</span>
                 </div>
                 <h4>${escapeHtml(team.name || "Team")}</h4>
-                <p>${escapeHtml(team.description || "Đội thi đua cho các hành động xanh có xác minh.")}</p>
+                <p>${escapeHtml(team.description || "")}</p>
               </article>
             `,
           )
@@ -2708,20 +3039,12 @@
           sortedUsers.findIndex(
             (entry) => entry.user_id === state.profile?.id,
           ) + 1;
-        const approvedCount = state.recentSubmissions.filter(
-          (item) => item.status === "approved",
-        ).length;
-
         document.getElementById("heroRankValue").textContent =
           userRank > 0 ? `#${userRank}` : "#--";
         document.getElementById("heroPointsValue").textContent =
           Number(totalPoints).toLocaleString("vi-VN");
         document.getElementById("heroStreakValue").textContent =
           `${state.profile?.streak || 0} ngày`;
-        document.getElementById("teamSummaryValue").textContent =
-          state.teams[0]?.name || "Chưa tham gia";
-        document.getElementById("approvedCountValue").textContent =
-          String(approvedCount);
         document.getElementById("participantsValue").textContent = String(
           state.userBoard.length,
         );
@@ -2839,9 +3162,7 @@
         ].filter(Boolean);
 
         if (potentialErrors.length) {
-          setError(
-            "Một phần dữ liệu Green Combat chưa sẵn sàng trong Supabase, nên trang đang dùng dữ liệu fallback để bạn tiếp tục dựng tính năng.",
-          );
+          setError("Một phần dữ liệu chưa sẵn sàng.");
           console.warn("Green Combat data warnings:", potentialErrors);
         }
 
@@ -2899,9 +3220,7 @@
         populateTeamOptions(state.teams);
         populatePlantOptions(state.plants);
         populateMissionOptions(state.missions);
-        setSubmissionFeedback(
-          "Đã tạo submission ở trạng thái pending. Bạn có thể dùng luồng admin để duyệt và cộng điểm.",
-        );
+        setSubmissionFeedback("Đã tạo submission pending.");
         await loadCombatData(state.session.user.id);
       }
 
@@ -2984,9 +3303,7 @@
           userLabel.textContent = session.user.email;
           loadCombatData(session.user.id).catch((error) => {
             console.error("Failed to load Green Combat data:", error);
-            setError(
-              "Không thể tải Green Combat lúc này. Kiểm tra schema, views hoặc RLS trong Supabase.",
-            );
+            setError("Không thể tải Green Combat lúc này.");
             state.profile = { id: session.user.id, streak: 0 };
             state.missions = fallbackData.missions;
             state.userBoard = [];

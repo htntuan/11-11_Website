@@ -928,6 +928,55 @@
           display: none !important;
         }
       }
+
+
+      /* Responsive hardening: mobile-first, no horizontal overflow */
+      * { box-sizing: border-box; }
+      html, body { max-width: 100%; overflow-x: hidden; }
+      img, video, iframe, canvas, svg, table { max-width: 100%; }
+      :where(.shell,.main,.workspace,.card,.panel,.stat,.hero-card,.asset-card,.mission-card,.command-grid,.grid,.topbar,.user-area,.section,.modal-card,.alert-dialog) { min-width: 0; }
+      :where(h1,h2,h3,h4,p,span,a,button,td,th,li,label,input,textarea,select) { overflow-wrap: anywhere; }
+      :where(a,button,input,select,textarea) { min-height: 44px; }
+      .shell { min-height: 100dvh; }
+      .sidebar { height: 100dvh; }
+      .main { min-width: 0; overflow-x: clip; }
+      .workspace, .grid, .cards-grid, .assets-grid, .command-grid, .mission-grid, .team-panel-grid, .alert-form-grid { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+      .topbar { gap: clamp(10px, 2vw, 16px); }
+      .search, #userLabel { min-width: 0; max-width: 100%; }
+
+      @media (max-width: 768px) {
+        body { min-width: 0; }
+        .shell { display: block; min-height: 100dvh; }
+        .main { width: 100%; padding: 12px; }
+        .topbar { position: sticky; top: 0; z-index: 50; display: grid; grid-template-columns: auto 1fr; align-items: center; padding: 12px; border-radius: 18px; }
+        .topbar .search { grid-column: 1 / -1; justify-self: stretch; width: 100%; }
+        .user-area { display: grid; grid-template-columns: auto auto; justify-content: end; gap: 8px; }
+        #userLabel { max-width: min(52vw, 220px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .workspace, .grid, .cards-grid, .assets-grid, .command-grid, .mission-grid, .team-panel-grid, .alert-form-grid, .calculator-container, .calculator-main, .hero-grid, .hero-content, .content-grid { grid-template-columns: 1fr !important; }
+        .card, .panel, .mission-card, .asset-card, .hero-card, .modal-card, .alert-dialog { width: 100%; max-width: 100%; padding: clamp(14px, 4vw, 20px); }
+        .sidebar { position: fixed; inset: 0 auto 0 0; width: min(280px, 84vw); max-width: 280px; height: 100dvh; overflow-y: auto; z-index: 1000; }
+        .mobile-menu-overlay { position: fixed; inset: 0; z-index: 900; }
+        .nav { grid-template-columns: 1fr; }
+        .sos-float { right: 14px; bottom: 14px; transform: scale(.9); transform-origin: bottom right; }
+        .sos-hint { display: none !important; }
+        .alert-modal, .modal { padding: 12px; }
+        .alert-dialog, .modal-card { max-height: calc(100dvh - 24px); overflow-y: auto; }
+        .plant-sidebar { width: min(420px, 94vw); height: 100dvh; }
+      }
+
+      @media (max-width: 480px) {
+        .main { padding: 10px; }
+        .topbar { grid-template-columns: auto 1fr; gap: 8px; }
+        .workspace, .grid, .cards-grid, .assets-grid { gap: 12px; }
+        .btn, button, .action-btn, .filter-btn { width: 100%; justify-content: center; }
+        .hero-metrics, .mini-stats, .stats-grid, .asset-controls, .assets-toolbar { grid-template-columns: 1fr !important; }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .shell { grid-template-columns: 220px minmax(0, 1fr); }
+        .workspace, .grid, .cards-grid, .assets-grid, .command-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+      }
+
     </style>
   </head>
 
